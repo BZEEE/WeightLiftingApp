@@ -2,8 +2,8 @@ package com.example.weightliftingapp;
 import java.util.ArrayList;
 
 public class RepMaxCalculator {
-    private double[] standardPlates = {45, 35, 25, 15, 10};
-    private double[] PowerliftingPlates = {45, 35, 25, 15, 10};
+    private double[] standardPlates = {45, 35, 25, 15, 10, 5, 2.5};
+    private double[] PowerliftingPlates = {55.1155, 44.0924, 33.0693, 22.0462, 11.0231, 5.51155, 2.755775, 1.10231};
 
 
     public ArrayList PlatesFromWeight(float weight, boolean plateFormat) {
@@ -31,5 +31,11 @@ public class RepMaxCalculator {
             }
         }
         return plates;
+    }
+
+    public void one_rm_calc(){
+        // returns nothing for now, does the 1 rm calculation.
+        // stores 1 rm first, then 95%, then 90%, and so on
+
     }
 }
