@@ -18,7 +18,8 @@
         android:textColor="@color/black"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/main_page_title" />
 
     <TextView
         android:id="@+id/GenderandAgeText"
@@ -31,7 +32,8 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainPageTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/MainPageTitle"
+        tools:text="@string/gender_and_age_text" />
 
     <TextView
         android:id="@+id/BodyWeightText"
@@ -44,7 +46,8 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GenderandAgeText" />
+        app:layout_constraintTop_toBottomOf="@+id/GenderandAgeText"
+        tools:text="@string/body_weight_text" />
 
     <TextView
         android:id="@+id/ExerciseTypeText"
@@ -57,7 +60,8 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BodyWeightText" />
+        app:layout_constraintTop_toBottomOf="@+id/BodyWeightText"
+        tools:text="@string/exercise_type_text" />
 
     <TextView
         android:id="@+id/ExerciseText"
@@ -70,7 +74,8 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ExerciseTypeText" />
+        app:layout_constraintTop_toBottomOf="@+id/ExerciseTypeText"
+        tools:text="@string/exercise_text" />
 
     <TextView
         android:id="@+id/LiftText"
@@ -83,7 +88,8 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ExerciseText" />
+        app:layout_constraintTop_toBottomOf="@+id/ExerciseText"
+        tools:text="@string/lift_text" />
 
     <TextView
         android:id="@+id/RepetitionsText"
@@ -96,7 +102,8 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LiftText" />
+        app:layout_constraintTop_toBottomOf="@+id/LiftText"
+        tools:text="@string/repetitions_text" />
 
     <Button
         android:id="@+id/RegularPlateStandardsButton"
@@ -109,7 +116,7 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RepetitionsText"
-        tools:text="Regular Plates" />
+        tools:text="@string/regular_plates_standards_text" />
 
     <Button
         android:id="@+id/PowerliftingPlateStandardsButton"
@@ -122,7 +129,7 @@
         android:textSize="15sp"
         app:layout_constraintStart_toEndOf="@+id/RegularPlateStandardsButton"
         app:layout_constraintTop_toBottomOf="@+id/RepetitionsText"
-        tools:text="Powerlifting Plates" />
+        tools:text="@string/powerlifting_plates_standards_text" />
 
     <Button
         android:id="@+id/CalculateButton"
@@ -134,6 +141,7 @@
         android:text="@string/calculate_button_text"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegularPlateStandardsButton" />
+        app:layout_constraintTop_toBottomOf="@+id/RegularPlateStandardsButton"
+        tools:text="@string/calculate_button_text" />
 
 </android.support.constraint.ConstraintLayout>
