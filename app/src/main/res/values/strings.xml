@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">WeightLiftingApp</string>
+    <string name="main_page_title">Calculator</string>
+    <string name="gender_and_age_text">Gender/Age</string>
+    <string name="body_weight_text">Body Weight</string>
+    <string name="exercise_type_text">Exercise Type</string>
+    <string name="exercise_text">Exercise</string>
+    <string name="lift_text">Lift</string>
+    <string name="repetitions_text">Repetitions</string>
+    <string name="regular_plates_standards_text">Regular Plates</string>
+    <string name="powerlifting_plates_standards_text">Powerlifting Plates</string>
+    <string name="calculate_button_text">Calculate</string>
 </resources>
