@@ -35,7 +35,19 @@ public class RepMaxCalculator {
 
     public void one_rm_calc(){
         // returns nothing for now, does the 1 rm calculation.
-        // stores 1 rm first, then 95%, then 90%, and so on
+        // input lift for x reps
+        double weight = System.out.printIn("Enter weight: ");
+        double reps = System.out.printIn("Enter reps: ");
+        double[] rel_perc = new double[10];
+        double perc = 1;
+        // run a 1 rm formula function
+        double max = RepMaxCalculator.EpleyAlgorithm(weight,reps);
+        int i = 0;
+        for (;i < 10; i++){
+            rel_perc[i] = max * perc;
+            perc = perc - 0.5;
+        }
+        // stores 1 rm first into array, then 95%, then 90%, and so on
 
     }
 
@@ -45,7 +57,7 @@ public class RepMaxCalculator {
     // r = repetitions
     // assuming r > 1, more than one repetition
 
-    public double EpleyAlgorithm(double w, double r) {
+    static double EpleyAlgorithm(double w, double r) {
         return w * (1 + r / 30);
     }
 
