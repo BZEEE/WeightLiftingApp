@@ -91,6 +91,17 @@
         app:layout_constraintTop_toBottomOf="@+id/ExerciseText"
         tools:text="@string/lift_text" />
 
+    <EditText
+        android:id="@+id/LiftInputBox"
+        android:inputType="text"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="148dp"
+        android:layout_marginLeft="148dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/RepetitionsInputBox"
+        app:layout_constraintStart_toEndOf="@+id/LiftText" />
+
     <TextView
         android:id="@+id/RepetitionsText"
         android:layout_width="wrap_content"
@@ -104,6 +115,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LiftText"
         tools:text="@string/repetitions_text" />
+
+    <EditText
+        android:id="@+id/RepetitionsInputBox"
+        android:inputType="text"
+        android:layout_width="171dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintBottom_toTopOf="@+id/PowerliftingPlateStandardsButton"
+        app:layout_constraintStart_toEndOf="@+id/RepetitionsText" />
 
     <Button
         android:id="@+id/RegularPlateStandardsButton"
