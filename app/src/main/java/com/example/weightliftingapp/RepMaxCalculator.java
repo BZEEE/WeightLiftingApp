@@ -51,6 +51,42 @@ public class RepMaxCalculator {
         // stores 1 rm first into array, then 95%, then 90%, and so on
 
     }
+    public double ipfpointcalc(double total, double bodyweight, char sex) {
+        // takes lifter's 3-lift total in (in kilograms) and converts to a score (only for raw/classic).
+        // adding in simple lifts just requires more variables
+        if (total == 0){
+            double IPFpoints = 0;
+            return IPFpoints;
+        }
+        else {
+            //initialize male constatns
+            if (sex == 'M'){
+                double C1 = 3106700;
+                double C2 = 8577850;
+                double C3 = 532160;
+                double C4 = 1470835;
+
+                double IPFpoints = 500 + 100(total - (C1*ln(bodyweight)-C2));
+                IPFpoints = IPFpoints / (C3*ln(bodyweight)-C4);
+                return IPFpoints;
+            }
+            else if (sex == 'F'){
+                double C1 = 1251435;
+                double C2 = 2280300;
+                double C3 = 345246;
+                double C4 = 868301;
+
+                double IPFpoints = 500 + 100(total - (C1*ln(bodyweight)-C2));
+                IPFpoints = IPFpoints / (C3*ln(bodyweight)-C4);
+                return IPFpoints;
+            }
+            else{
+                // specify biological sex or nah fam
+
+            }
+        }
+    }
+
 
     public double OneRepMaxCalculation(double lift, int repetition, RepMaxAlgorithms alg) {
         double output;
