@@ -87,6 +87,33 @@ public class RepMaxCalculator {
         }
     }
 
+    public double wilks_calculator(double total, double bodyweight, char sex){
+        double a;
+        double b;
+        double c;
+        double d;
+        double e;
+        double f;
+        if (sex == 'M'){
+            double a=-216.0475144;
+            double b=16.2606339;
+            double c=-0.002388645;
+            double d=-0.00113732;
+            double e=7.01863E-06;
+            double f=-1.291E-08;
+        }
+        else if (sex == 'F'){
+            double a=594.31747775582;
+            double b=-27.23842536447;
+            double c=0.82112226871;
+            double d=-0.00930733913;
+            double e=4.731582E-05;
+            double f=-9.054E-08;
+        }
+        double coeff = 500 / (a + b*bodyweight + c*bodyweight*bodyweight + d*bodyweight*bodyweight*bodyweight + e*bodyweight*bodyweight*bodyweight*bodyweight + f*bodyweight*bodyweight*bodyweight*bodyweight*bodyweight);
+        return coeff;
+    }
+
 
     public double OneRepMaxCalculation(double lift, int repetition, RepMaxAlgorithms alg) {
         double output;
