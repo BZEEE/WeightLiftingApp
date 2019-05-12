@@ -1,5 +1,6 @@
 package com.example.weightliftingapp;
 import java.util.ArrayList;
+import com.example.weightliftingapp.RepMaxAlgorithms.*;
 
 public class RepMaxCalculator {
     private double[] standardPlates = {45, 35, 25, 15, 10, 5, 2.5};
@@ -51,37 +52,68 @@ public class RepMaxCalculator {
 
     }
 
+    public double OneRepMaxCalculation(double lift, int repetition, RepMaxAlgorithms alg) {
+        double output;
+        switch (alg) {
+            case Epley:
+                output = EpleyAlgorithm(lift, repetition);
+                break;
+            case Brzycki:
+                output = BrzyckiAlgorithm(lift, repetition);
+                break;
+            case McGlothin:
+                output = McGlothinAlgorithm(lift,repetition);
+                break;
+            case Lombardi:
+                output = LombardiAlgorithm(lift, repetition);
+                break;
+            case Mayhew:
+                output = MayhewAlgorithm(lift, repetition);
+                break;
+            case OConnor:
+                output = OConnorAlgorithm(lift, repetition);
+                break;
+            case Wathann:
+                output = WathannAlgorithm(lift, repetition);
+                break;
+            default:
+                output = EpleyAlgorithm(lift, repetition);
+                break;
+        }
+        return output;
+    }
+
     // various algorithms for choosing 1 rep max
     // https://en.wikipedia.org/wiki/One-repetition_maximum
     // w = weight lifted
     // r = repetitions
     // assuming r > 1, more than one repetition
 
-    static double EpleyAlgorithm(double w, double r) {
+    private double EpleyAlgorithm(double w, double r) {
         return w * (1 + r / 30);
     }
 
-    public double BrzyckiAlgorithm(double w, double r) {
+    private double BrzyckiAlgorithm(double w, double r) {
         return w * 36 / (37 - r);
     }
 
-    public double McGlothinAlgorithm(double w, double r) {
+    private double McGlothinAlgorithm(double w, double r) {
         return 100 * w / (101.3 - 2.67123 * r);
     }
 
-    public double LombardiAlgorithm(double w, double r) {
+    private double LombardiAlgorithm(double w, double r) {
         return w * Math.pow(r, 0.10);
     }
 
-    public double MayhewAlgorithm(double w, double r) {
+    private double MayhewAlgorithm(double w, double r) {
         return 100 * w / (52.2 + 41.9 * Math.pow(Math.E ,-0.055 * r));
     }
 
-    public double OConnorAlgorithm(double w, double r) {
+    private double OConnorAlgorithm(double w, double r) {
         return w * (1 + r / 40);
     }
 
-    public double WathannAlgorithm(double w, double r) {
+    private double WathannAlgorithm(double w, double r) {
         return 100 * w / (48.8 + 53.8 * Math.pow(Math.E, -0.075 * r));
     }
 }
