@@ -8,40 +8,23 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/MainPageTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/main_page_title"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/main_page_title" />
-
-    <TextView
         android:id="@+id/GenderandAgeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="@string/gender_and_age_text"
         android:textColor="@color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainPageTitle"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/gender_and_age_text" />
 
     <EditText
         android:id="@+id/GenderAgeInputBox"
-        android:layout_width="172dp"
-        android:layout_height="33dp"
+        android:layout_width="171dp"
+        android:layout_height="42dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:inputType="text"
@@ -54,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:text="@string/body_weight_text"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -64,8 +47,8 @@
 
     <EditText
         android:id="@+id/BodyweightInputBox"
-        android:layout_width="172dp"
-        android:layout_height="33dp"
+        android:layout_width="174dp"
+        android:layout_height="41dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:inputType="text"
@@ -78,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:text="@string/exercise_type_text"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -88,8 +71,8 @@
 
     <EditText
         android:id="@+id/ExerciseTypeInputBox"
-        android:layout_width="172dp"
-        android:layout_height="33dp"
+        android:layout_width="173dp"
+        android:layout_height="42dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:inputType="text"
@@ -102,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:text="@string/exercise_text"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -112,8 +95,8 @@
 
     <EditText
         android:id="@+id/ExerciseInputBox"
-        android:layout_width="172dp"
-        android:layout_height="33dp"
+        android:layout_width="174dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:inputType="text"
@@ -124,9 +107,9 @@
         android:id="@+id/LiftText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="24dp"
         android:text="@string/lift_text"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -136,8 +119,8 @@
 
     <EditText
         android:id="@+id/LiftInputBox"
-        android:layout_width="172dp"
-        android:layout_height="33dp"
+        android:layout_width="175dp"
+        android:layout_height="45dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:inputType="text"
@@ -150,7 +133,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:text="@string/repetitions_text"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -160,8 +143,8 @@
 
     <EditText
         android:id="@+id/RepetitionsInputBox"
-        android:layout_width="171dp"
-        android:layout_height="33dp"
+        android:layout_width="174dp"
+        android:layout_height="41dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:inputType="text"
@@ -172,7 +155,7 @@
         android:id="@+id/RegularPlateStandardsButton"
         android:layout_width="186dp"
         android:layout_height="65dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="16dp"
         android:text="@string/regular_plates_standards_text"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/CalculateButton"
@@ -203,12 +186,16 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/TealBlue"
         android:text="@string/calculate_button_text"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RegularPlateStandardsButton"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="@string/calculate_button_text" />
 
 </android.support.constraint.ConstraintLayout>
