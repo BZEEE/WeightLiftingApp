@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import static com.example.weightliftingapp.RepMaxCalculator.*;
+import static com.example.weightliftingapp.RepMaxAlgorithms.*;
 
 public class ResultsActivity extends AppCompatActivity {
 
@@ -20,11 +21,12 @@ public class ResultsActivity extends AppCompatActivity {
         // run calculator using RepMaxCalculator
         // ...
         // make sure to return the convert the value to a String before assigning it to the TextView below
-        // String oneRepMaxValue = RepMaxCalculator.RepMaxCalculation().ToString();
+        double oneRepMaxValue = RepMaxCalculator.OneRepMaxCalculation(liftResponse, repetitionResponse, RepMaxAlgorithms.Epley);
 
         // set response value to the TextView of this activity
         TextView OneRepMaxResult = (TextView) findViewById(R.id.one_rep_max_result_value);
-        // OneRepMaxResult.setText(oneRepMaxValue);
+        OneRepMaxResult.setText(Double.toString(oneRepMaxValue));
+
 
     }
 }
