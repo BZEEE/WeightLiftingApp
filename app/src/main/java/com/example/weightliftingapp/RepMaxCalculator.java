@@ -1,8 +1,7 @@
 package com.example.weightliftingapp;
 import java.util.ArrayList;
-import com.example.weightliftingapp.RepMaxAlgorithms.*;
 
-public class RepMaxCalculator {
+public class RepMaxCalculator implements IOneRepMax{
     private static double[] standardPlates = {45, 35, 25, 15, 10, 5, 2.5};
     private static double[] PowerliftingPlates = {55.1155, 44.0924, 33.0693, 22.0462, 11.0231, 5.51155, 2.755775, 1.10231};
 
@@ -34,82 +33,7 @@ public class RepMaxCalculator {
         return plates;
     }
 
-    public static void one_rm_calc(double weight, int reps){
-        // returns nothing for now, does the 1 rm calculation.
-        // input lift for x reps
-        double[] rel_perc = new double[10];
-        double perc = 1;
-        // run a 1 rm formula function
-        double max = RepMaxCalculator.OneRepMaxCalculation(weight, reps, RepMaxAlgorithms.Epley);
-        int i = 0;
-        for (;i < 10; i++){
-            rel_perc[i] = max * perc;
-            perc = perc - 0.05;
-        }
-        // stores 1 rm first into array, then 95%, then 90%, and so on
-
-    }
-
-    public static double IPFPointCalculation(double total, double bodyweight, char sex) {
-        // takes lifter's 3-lift total in (in kilograms) and converts to a score (only for raw/classic).
-        // adding in simple lifts just requires more variables
-        double C1;
-        double C2;
-        double C3;
-        double C4;
-        if (total == 0){
-            return 0;
-        }
-        else {
-            // initialize male constants
-            if (sex == 'M'){
-                C1 = 3106700;
-                C2 = 8577850;
-                C3 = 532160;
-                C4 = 1470835;
-            }
-            // initialize female constants
-            else {
-                C1 = 1251435;
-                C2 = 2280300;
-                C3 = 345246;
-                C4 = 868301;
-            }
-            double IPFpoints = 500 + 100 * (total - (C1*Math.log(bodyweight)-C2));
-            IPFpoints = IPFpoints / (C3*Math.log(bodyweight)-C4);
-            return IPFpoints;
-        }
-    }
-
-    public static double WilksCalculator(double total, double bodyweight, char sex){
-        double a;
-        double b;
-        double c;
-        double d;
-        double e;
-        double f;
-        if (sex == 'M'){
-            a =- 216.0475144;
-            b = 16.2606339;
-            c =- 0.002388645;
-            d =- 0.00113732;
-            e = 7.01863E-06;
-            f =- 1.291E-08;
-        }
-        else {
-            a = 594.31747775582;
-            b =- 27.23842536447;
-            c = 0.82112226871;
-            d =- 0.00930733913;
-            e = 4.731582E-05;
-            f =- 9.054E-08;
-        }
-        double coeff = 500 / (a + b*bodyweight + c*bodyweight*bodyweight + d*bodyweight*bodyweight*bodyweight + e*bodyweight*bodyweight*bodyweight*bodyweight + f*bodyweight*bodyweight*bodyweight*bodyweight*bodyweight);
-        return coeff;
-    }
-
-
-    public static double OneRepMaxCalculation(double lift, int repetition, RepMaxAlgorithms alg) {
+    public double Calculate(double lift, int repetition, RepMaxAlgorithms alg) {
         double output;
         switch (alg) {
             case Epley:

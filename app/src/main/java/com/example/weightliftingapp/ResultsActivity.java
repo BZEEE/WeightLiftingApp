@@ -24,7 +24,8 @@ public class ResultsActivity extends AppCompatActivity {
         // run calculator using RepMaxCalculator
         // ...
         // make sure to return the convert the value to a String before assigning it to the TextView below
-        double oneRepMaxValue = RepMaxCalculator.OneRepMaxCalculation(liftResponse, repetitionResponse, RepMaxAlgorithms.Epley);
+        RepMaxCalculator calculator = new RepMaxCalculator();
+        double oneRepMaxValue = calculator.Calculate(liftResponse, repetitionResponse, RepMaxAlgorithms.Epley);
 
         // set response value to the TextView of this activity
         TextView OneRepMaxResult = findViewById(R.id.one_rep_max_result_value);
