@@ -10,4 +10,5 @@
     <string name="regular_plates_standards_text">Regular Plates</string>
     <string name="powerlifting_plates_standards_text">Powerlifting Plates</string>
     <string name="calculate_button_text">Calculate</string>
+    <string name="one_rep_max_calculation">One Rep Max</string>
 </resources>
