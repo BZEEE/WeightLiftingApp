@@ -8,7 +8,7 @@ import static android.content.ContentValues.TAG;
 
 // might be able to put authentication logic right in the activity logic
 // https://firebase.google.com/docs/auth/android/manage-users
-
+//
 //public class FirebaseAuthentication {
 //    private FirebaseAuth mAuth;
 //
