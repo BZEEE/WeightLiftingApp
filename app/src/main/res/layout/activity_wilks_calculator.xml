@@ -29,14 +29,14 @@
         android:inputType="text"
         android:textColorHint="@color/white"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:backgroundTint="@color/white"
         android:hint="@string/body_weight_text" />
 
-    <EditText
-        android:id="@+id/GenderInputBox"
+    <Spinner
+        android:id="@+id/GenderInputSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/white"
         android:textColorHint="@color/white"
@@ -44,11 +44,11 @@
         android:hint="@string/gender_text" />
 
     <Button
-        android:id="@+id/OneRepMaxCalculateButton"
+        android:id="@+id/WilksCalculateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_blue_background"
-        android:layout_below="@id/GenderInputBox"
+        android:layout_below="@id/GenderInputSpinner"
         android:text="@string/calculate_button_text"
         android:textSize="24sp" />
 

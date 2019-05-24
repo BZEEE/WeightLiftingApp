@@ -12,10 +12,11 @@ public class RepMaxCalculatorActivity extends AppCompatActivity {
     private Button calculateButton;
     private EditText liftInputBox;
     private EditText repetitionsInputBox;
-    private static final String liftResponseAppId = "com.example.weightliftingapp.liftResponse";
-    private static final String repetitionResponseAppId = "com.example.weightliftingapp.repetitionResponse";
+    public static final String liftResponseAppId = "com.example.weightliftingapp.liftResponse";
+    public static final String repetitionResponseAppId = "com.example.weightliftingapp.repetitionResponse";
     public static final String flag = "com.example.weightliftingapp.calculatorFlag";
     public static final String repMaxCalculatorId = "RepMaxCalculatorActivity";
+    public static final String oneRepMaxDisplayTitle = "One Rep Max";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
