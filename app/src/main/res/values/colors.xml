@@ -7,4 +7,6 @@
     <color name="black">#000</color>
     <color name="TealBlue">#00bbff</color>
     <color name="limeGreen">#42f486</color>
+    <color name="white">#fff</color>
+    <color name="general_background">#1A1A1A</color>
 </resources>

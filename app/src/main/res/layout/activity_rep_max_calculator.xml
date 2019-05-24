@@ -7,15 +7,10 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@color/general_background"
-    tools:context=".LoginActivity">
+    tools:context=".RepMaxCalculatorActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/LoginTitle"
-        android:src="@drawable/login_page_background"/>
     <TextView
-        android:id="@+id/LoginTitle"
+        android:id="@+id/OneRepMaxTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -23,37 +18,37 @@
         android:textSize="48sp"
         android:textColor="@color/white"
         android:textStyle="bold|italic"
-        android:text="@string/login_title"
-        android:layout_above="@id/UsernameInputBox"
+        android:text="@string/wilks_activity_title"
+        android:layout_above="@id/LiftInputBox"
         />
     <EditText
-        android:id="@+id/UsernameInputBox"
+        android:id="@+id/LiftInputBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:textColorHint="@color/white"
         android:layout_centerVertical="true"
         android:backgroundTint="@color/white"
-        android:hint="@string/username" />
+        android:hint="@string/lift_text" />
 
     <EditText
-        android:id="@+id/PasswordInputBox"
+        android:id="@+id/RepetitionsInputBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/white"
         android:textColorHint="@color/white"
-        android:layout_below="@id/UsernameInputBox"
-        android:hint="@string/password" />
+        android:layout_below="@id/LiftInputBox"
+        android:hint="@string/repetitions_text" />
 
     <Button
-        android:id="@+id/LoginButton"
+        android:id="@+id/OneRepMaxCalculateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_blue_background"
-        android:layout_below="@id/PasswordInputBox"
-        android:text="@string/login_button_text"
+        android:layout_below="@id/RepetitionsInputBox"
+        android:text="@string/calculate_button_text"
         android:textSize="24sp" />
 
 </RelativeLayout>

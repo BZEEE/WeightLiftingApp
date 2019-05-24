@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-    private Button calculateButton;
-    public static final String liftResponseAppId = "com.example.weightliftingapp.liftResponse";
-    public static final String repetitionResponseAppId = "com.example.weightliftingapp.repetitionResponse";
+
+    private Button goToCalculatorsButton;
+    private Button goToProfileButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,25 +21,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void CreateUIInputs() {
-        calculateButton = (Button) findViewById(R.id.CalculateButton);
-        calculateButton.setOnClickListener(new View.OnClickListener() {
+        goToCalculatorsButton = findViewById(R.id.GoToCalculatorButton);
+        goToCalculatorsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OpenResultsActivity();
+                OpenCalculatorSelectionActivity();
+            }
+        });
+        goToProfileButton = findViewById(R.id.GoToProfileButton);
+        goToProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenUserProfileActivity();
             }
         });
     }
 
-    private void OpenResultsActivity() {
-        EditText liftInputBox = (EditText) findViewById(R.id.LiftInputBox);
-        EditText repetitionsInputBox = (EditText) findViewById(R.id.RepetitionsInputBox);
-        double liftResponse = Double.parseDouble(liftInputBox.getText().toString());
-        int repetitionResponse = Integer.parseInt(repetitionsInputBox.getText().toString());
+    private void OpenCalculatorSelectionActivity() {
+        Intent intent = new Intent(this, CalculatorSelectionActivity.class);
+        startActivity(intent);
+    }
 
-
-        Intent intent = new Intent(this, ResultsActivity.class);
-        intent.putExtra(liftResponseAppId, liftResponse);
-        intent.putExtra(repetitionResponseAppId, repetitionResponse);
+    private void OpenUserProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }
 }

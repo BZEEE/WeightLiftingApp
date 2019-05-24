@@ -1,23 +1,41 @@
 <resources>
     <string name="app_name">WeightLiftingApp</string>
-    <string name="main_page_title">Calculator</string>
-    <string name="gender_and_age_text">Gender/Age</string>
-    <string name="body_weight_text">Body Weight</string>
-    <string name="exercise_type_text">Exercise Type</string>
-    <string name="exercise_text">Exercise</string>
-    <string name="lift_text">Lift</string>
-    <string name="repetitions_text">Repetitions</string>
-    <string name="regular_plates_standards_text">Regular Plates</string>
-    <string name="powerlifting_plates_standards_text">Powerlifting Plates</string>
-    <string name="calculate_button_text">Calculate</string>
-    <string name="one_rep_max_calculation">One Rep Max</string>
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+
+    <!--Main Activity Page-->
+    <string name="go_to_calculator_button_text"> go to calculators</string>
+    <string name="go_to_profile_button_text">go to profile</string>
+
+    <!--Login Activity Page-->
     <string name="username">Enter Username</string>
     <string name="password">Enter Password</string>
     <string name="login_button_text">Login</string>
+    <string name="login_title">Power Buddy</string>
+
+
+
+    <!--One Rep Max Activity Page-->
+    <string name="lift_text">enter lift amount</string>
+    <string name="repetitions_text">how many repetitions</string>
+    <string name="one_rep_max_activity_title">One Rep Max Calculator</string>
+
+    <!--Wilks Activity Page-->
+    <string name="body_weight_text">enter body weight</string>
+    <string name="gender_text">enter gender</string>
+    <string name="wilks_activity_title">Wilks Calculator</string>
+
+    <!--IPF Activity Page-->
+    <string name="IPF_text">enter lift amount</string>
+    <string name="dude_text">how many repetitions</string>
+    <string name="IPF_activity_title">IPF Calculator</string>
+
+    <string name="calculate_button_text">Calculate</string>
+
+    <!--Results Activity-->
+    <string name="blank_placeholder"></string>
 </resources>
