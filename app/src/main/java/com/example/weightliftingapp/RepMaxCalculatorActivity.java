@@ -23,7 +23,7 @@ public class RepMaxCalculatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rep_max_calculator);
 
-        CreateUIInputs();
+        this.CreateUIInputs();
     }
 
     private void CreateUIInputs() {

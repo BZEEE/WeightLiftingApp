@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CreateUIInputs();
+        this.CreateUIInputs();
     }
 
     private void CreateUIInputs() {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OpenLogInActivity() {
-        Intent intent = new Intent(this, UserProfileActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

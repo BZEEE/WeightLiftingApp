@@ -19,7 +19,7 @@ public class IPFCalculatorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ipfcalculator);
 
-        CreateUIInputs();
+        this.CreateUIInputs();
     }
 
     private void CreateUIInputs() {

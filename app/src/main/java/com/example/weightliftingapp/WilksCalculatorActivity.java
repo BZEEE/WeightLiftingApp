@@ -13,6 +13,8 @@ public class WilksCalculatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wilks_calculator);
+
+        this.CreateUIInputs();
     }
 
     private void CreateUIInputs() {

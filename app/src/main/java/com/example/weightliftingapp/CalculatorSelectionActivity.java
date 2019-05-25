@@ -17,7 +17,7 @@ public class CalculatorSelectionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator_selection);
 
-        CreateUIInputs();
+        this.CreateUIInputs();
     }
 
     private void CreateUIInputs() {
