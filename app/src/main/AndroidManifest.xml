@@ -9,14 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AchievementsActivity"></activity>
+        <activity android:name=".WilksCalculatorActivity" />
+        <activity android:name=".AchievementsActivity" />
         <activity android:name=".IPFCalculatorActivity" />
         <activity
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CalculatorSelectionActivity" />
-        <activity android:name=".WilksCalculatorActivity" />
         <activity android:name=".RepMaxCalculatorActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ResultsActivity" />

@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private Button goToCalculatorsButton;
-    private Button goToProfileButton;
+    private Button goToLogInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
                 OpenCalculatorSelectionActivity();
             }
         });
-        goToProfileButton = findViewById(R.id.GoToProfileButton);
-        goToProfileButton.setOnClickListener(new View.OnClickListener() {
+        goToLogInButton = findViewById(R.id.GoToProfileButton);
+        goToLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OpenUserProfileActivity();
+                OpenLogInActivity();
             }
         });
     }
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void OpenUserProfileActivity() {
+    private void OpenLogInActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
     }

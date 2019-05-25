@@ -10,7 +10,7 @@ import android.widget.EditText;
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     public static final String usernameAppId = "com.example.weightliftingapp.username";
-    public static final String passwordAppId = "com.example.weightliftingapp.pasasword";
+    public static final String passwordAppId = "com.example.weightliftingapp.password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         String passwordResponse = passwordInputBox.getText().toString();
 
 
-        Intent intent = new Intent(this, ResultsActivity.class);
+        Intent intent = new Intent(this, UserProfileActivity.class);
         intent.putExtra(usernameAppId, usernameResponse);
         intent.putExtra(passwordAppId, passwordResponse);
         startActivity(intent);

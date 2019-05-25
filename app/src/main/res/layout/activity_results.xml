@@ -12,7 +12,6 @@
     <TextView
         android:id="@+id/results_title"
         android:layout_width="wrap_content"
-        android:text="@string/blank_placeholder"
         android:textSize="40sp"
         android:textColor="@color/white"
         android:layout_centerHorizontal="true"
@@ -23,7 +22,7 @@
         android:id="@+id/results_value"
         android:layout_width="wrap_content"
         android:textSize="40sp"
-        android:text="@string/blank_placeholder"
+        android:textColor="@color/limeGreen"
         android:layout_below="@id/results_title"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"

@@ -8,8 +8,8 @@
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
 
     <!--Main Activity Page-->
-    <string name="go_to_calculator_button_text"> go to calculators</string>
-    <string name="go_to_profile_button_text">go to profile</string>
+    <string name="go_to_calculator_button_text">Go To Calculators</string>
+    <string name="go_to_profile_button_text">Log In</string>
 
     <!--Login Activity Page-->
     <string name="username">Enter Username</string>
@@ -36,7 +36,6 @@
     <string name="calculate_button_text">Calculate</string>
 
     <!--Results Activity-->
-    <string name="blank_placeholder"></string>
 
     <!--Calculator Selection Activity-->
     <string name="calculator_selection_activity_title">Select Calculator</string>
