@@ -63,5 +63,5 @@
     <string name="side_bar_wilks_calculator">Wilks Calculator</string>
     <string name="side_bar_ipf_calculator">IPF Calculator</string>
     <string name="side_bar_achievements">Achievements</string>
-    <string name="side_bar_log_out">Log Out</string>
+    <string name="side_bar_log_out">Sign Out</string>
 </resources>

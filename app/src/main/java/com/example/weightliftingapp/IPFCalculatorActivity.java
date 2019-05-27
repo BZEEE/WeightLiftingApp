@@ -12,7 +12,7 @@ public class IPFCalculatorActivity extends AppCompatActivity {
     private Button calculateButton;
     private static final String flag = "com.example.weightliftingapp.calculatorFlag";
     public static final String ipfPointCalculatorId = "ipfPointCalculatorActivity";
-    public static final String ipfDisplayTitle = "IPF Calculation";
+    public static final String ipfDisplayTitle = "Your IPF Score";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

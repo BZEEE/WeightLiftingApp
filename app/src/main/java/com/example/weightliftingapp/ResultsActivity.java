@@ -44,22 +44,21 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // set response value to the TextView of this activity
                 this.calculatorTitle.setText(oneRepMaxDisplayTitle);
-                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.1f", oneRepMaxValue));
+                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.2f", oneRepMaxValue));
                 break;
 
-//            case wilkCalculatorId:
-////                double bodyWeightResponse = intent.getDoubleExtra(bodyWeightResponseAppId, 0);
-////                // String genderResponse = intent.getStringExtra(genderResponseAppId);
-////                // run calculator using WilksCalculator
-////
-////                // make sure to return the convert the value to a String before assigning it to the TextView below
-////                WilksCalculator wilksCalculator = new WilksCalculator();
-////                double wilksValue = wilksCalculator.Calculate(bodyWeightResponse, "M");
-////
-////                // set response value to the TextView of this activity
-////                this.calculatorTitle.setText(wilksDisplayTitle);
-////                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.1f", wilksValue));
-//                break;
+            case wilksCalculatorId:
+                double bodyWeightResponse = intent.getDoubleExtra(bodyWeightResponseAppId, 0);
+                String genderResponse = intent.getStringExtra(genderResponseAppId);
+                // run calculator using WilksCalculator
+                // make sure to return the convert the value to a String before assigning it to the TextView below
+                WilksCalculator wilksCalculator = new WilksCalculator();
+                double wilksValue = wilksCalculator.Calculate(bodyWeightResponse, genderResponse);
+
+                // set response value to the TextView of this activity
+                this.calculatorTitle.setText(wilksDisplayTitle);
+                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.3f", wilksValue));
+                break;
 
             case ipfPointCalculatorId:
 

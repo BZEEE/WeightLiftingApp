@@ -2,8 +2,10 @@ package com.example.weightliftingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,9 +16,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import static com.example.weightliftingapp.LoginActivity.passwordAppId;
+import static com.example.weightliftingapp.LoginActivity.usernameAppId;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FirebaseAuth mAuth;
+    private static final String TAG = "debugging";
+    private String username;
+    private String password;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +57,43 @@ public class UserProfileActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        // initialize google fire base authentication
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        Intent intent = getIntent();
+
+        this.username = intent.getStringExtra(usernameAppId);
+        this.password = intent.getStringExtra(passwordAppId);
+
+        mAuth.signInWithEmailAndPassword(username, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            // updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(UserProfileActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            // updateUI(null);
+                        }
+                    }
+                });
+
+        // update UI function retreives users specific data and populates the profile
+        // ad acheivements activities with that data
+        // updateUI(currentUser);
     }
 
     @Override
@@ -81,7 +136,8 @@ public class UserProfileActivity extends AppCompatActivity
         Intent intent;
 
         if (id == R.id.nav_log_out) {
-            //have the user log out
+            //have the user sign out
+            FirebaseAuth.getInstance().signOut();
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_achievements) {

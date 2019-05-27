@@ -1,5 +1,6 @@
 package com.example.weightliftingapp;
 
+
 public class WilksCalculator implements IWilks {
 
     public double Calculate(double bodyWeight, String gender) {
@@ -9,7 +10,8 @@ public class WilksCalculator implements IWilks {
         double d;
         double e;
         double f;
-        if (gender == "Male"){
+
+        if (gender.equals("Male")) {
             a = -216.0475144;
             b = 16.2606339;
             c = -0.002388645;

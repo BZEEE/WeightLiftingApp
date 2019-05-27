@@ -21,24 +21,24 @@ public class CalculatorSelectionActivity extends AppCompatActivity {
     }
 
     private void CreateUIInputs() {
-        goToOneRepMaxCalculatorButton = findViewById(R.id.GoToOneRepMaxCalculatorButton);
-        goToOneRepMaxCalculatorButton.setOnClickListener(new View.OnClickListener() {
+        this.goToOneRepMaxCalculatorButton = findViewById(R.id.GoToOneRepMaxCalculatorButton);
+        this.goToOneRepMaxCalculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenOneRepMaxCalculatorActivity();
             }
         });
 
-        goToWilksCalculatorButton = findViewById(R.id.GoToWilksCalculatorButton);
-        goToWilksCalculatorButton.setOnClickListener(new View.OnClickListener() {
+        this.goToWilksCalculatorButton = findViewById(R.id.GoToWilksCalculatorButton);
+        this.goToWilksCalculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenWilksCalculatorActivity();
             }
         });
 
-        goToIPFCalculatorButton = findViewById(R.id.GoToIPFCalculatorButton);
-        goToIPFCalculatorButton.setOnClickListener(new View.OnClickListener() {
+        this.goToIPFCalculatorButton = findViewById(R.id.GoToIPFCalculatorButton);
+        this.goToIPFCalculatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenIPFCalculatorActivity();
