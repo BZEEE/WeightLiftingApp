@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_achievements"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/side_bar_achievements" />
+        <item
+            android:id="@+id/nav_one_rep_max_calculator"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/side_bar_one_rep_max_calculator" />
+        <item
+            android:id="@+id/nav_wilks_calculator"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/side_bar_wilks_calculator" />
+        <item
+            android:id="@+id/nav_ipf_calculator"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/side_bar_ipf_calculator" />
+        <item
+            android:id="@+id/nav_log_out"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/side_bar_log_out" />
+    </group>
+
+</menu>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:background="@color/general_background"
+    tools:context=".WilksCalculatorActivity">
+
+    <TextView
+        android:id="@+id/WilksTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:textSize="48sp"
+        android:textColor="@color/white"
+        android:textStyle="bold|italic"
+        android:text="@string/wilks_activity_title"
+        android:layout_above="@id/BodyWeightInputBox"
+        />
+
+    <EditText
+        android:id="@+id/BodyWeightInputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/white"
+        android:hint="@string/body_weight_text" />
+
+    <Spinner
+        android:id="@+id/GenderInputSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_below="@id/BodyWeightInputBox"
+        android:hint="@string/gender_text" />
+
+    <Button
+        android:id="@+id/WilksCalculateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners_blue_background"
+        android:layout_below="@id/GenderInputSpinner"
+        android:text="@string/calculate_button_text"
+        android:textSize="24sp" />
+
+</RelativeLayout>
