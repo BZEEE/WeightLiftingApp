@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
-    public static final String usernameAppId = "com.example.weightliftingapp.username";
+    public static final String emailAppId = "com.example.weightliftingapp.email";
     public static final String passwordAppId = "com.example.weightliftingapp.password";
 
     @Override
@@ -31,14 +31,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void OpenUserProfileActivity() {
-        EditText usernameInputBox = findViewById(R.id.UsernameInputBox);
+        EditText emailInputBox = findViewById(R.id.EmailInputBox);
         EditText passwordInputBox = findViewById(R.id.PasswordInputBox);
-        String usernameResponse = usernameInputBox.getText().toString();
+        String emailResponse = emailInputBox.getText().toString();
         String passwordResponse = passwordInputBox.getText().toString();
 
 
         Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(usernameAppId, usernameResponse);
+        intent.putExtra(emailAppId, emailResponse);
         intent.putExtra(passwordAppId, passwordResponse);
         startActivity(intent);
     }

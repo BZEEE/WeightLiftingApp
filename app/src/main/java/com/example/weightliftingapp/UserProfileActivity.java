@@ -27,16 +27,22 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import static com.example.weightliftingapp.LoginActivity.emailAppId;
 import static com.example.weightliftingapp.LoginActivity.passwordAppId;
-import static com.example.weightliftingapp.LoginActivity.usernameAppId;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth mAuth;
+    private FirebaseAuth fAuth;
+    private FirebaseDatabase fDatabase;
     private static final String TAG = "debugging";
-    private String username;
+    private String email;
     private String password;
 
 
@@ -62,8 +68,10 @@ public class UserProfileActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        // initialize google fire base authentication
-        mAuth = FirebaseAuth.getInstance();
+        // initialize an instance to google fire base authentication
+        fAuth = FirebaseAuth.getInstance();
+        // initialize an instance to google real time database
+        fDatabase = FirebaseDatabase.getInstance();
     }
 
     @Override
@@ -72,17 +80,17 @@ public class UserProfileActivity extends AppCompatActivity
 
         Intent intent = getIntent();
 
-        this.username = intent.getStringExtra(usernameAppId);
+        this.email = intent.getStringExtra(emailAppId);
         this.password = intent.getStringExtra(passwordAppId);
 
-        mAuth.signInWithEmailAndPassword(username, password)
+        fAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = fAuth.getCurrentUser();
                             // updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -241,5 +249,30 @@ public class UserProfileActivity extends AppCompatActivity
                         Log.d(TAG, "User re-authenticated.");
                     }
                 });
+    }
+
+    private void writeToDatabase(String location, String message) {
+        DatabaseReference refLocation = fDatabase.getReference(location);
+        refLocation.setValue(message);
+
+    }
+
+    private void readFromDatabase(DatabaseReference refLocation) {
+        // Read from the database
+        refLocation.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 }

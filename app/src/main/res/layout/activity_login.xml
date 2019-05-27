@@ -24,10 +24,10 @@
         android:textColor="@color/white"
         android:textStyle="bold|italic"
         android:text="@string/login_title"
-        android:layout_above="@id/UsernameInputBox"
+        android:layout_above="@id/EmailInputBox"
         />
     <EditText
-        android:id="@+id/UsernameInputBox"
+        android:id="@+id/EmailInputBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -46,7 +46,7 @@
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/white"
         android:textColorHint="@color/white"
-        android:layout_below="@id/UsernameInputBox"
+        android:layout_below="@id/EmailInputBox"
         android:hint="@string/password" />
 
     <Button
