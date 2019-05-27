@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1069271142328",
+    "firebase_url": "https://weightliftingapp-240520.firebaseio.com",
+    "project_id": "weightliftingapp-240520",
+    "storage_bucket": "weightliftingapp-240520.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069271142328:android:5b721f38148d4873",
+        "android_client_info": {
+          "package_name": "com.example.weightliftingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069271142328-eafsdludiq7gb4b00pdkbh1rg8o9jkev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCls4-VEWCma7-5bJZFvAtVCyr-F7fgrFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069271142328-eafsdludiq7gb4b00pdkbh1rg8o9jkev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

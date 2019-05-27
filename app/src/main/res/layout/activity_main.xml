@@ -1,201 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/darkOrange"
+    android:background="@color/general_background"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/GenderandAgeText"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/gender_and_age_text"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/gender_and_age_text" />
-
-    <EditText
-        android:id="@+id/GenderAgeInputBox"
-        android:layout_width="171dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/GenderandAgeText" />
-
-    <TextView
-        android:id="@+id/BodyWeightText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/body_weight_text"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GenderandAgeText"
-        tools:text="@string/body_weight_text" />
-
-    <EditText
-        android:id="@+id/BodyweightInputBox"
-        android:layout_width="174dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/BodyWeightText" />
-
-    <TextView
-        android:id="@+id/ExerciseTypeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/exercise_type_text"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BodyWeightText"
-        tools:text="@string/exercise_type_text" />
-
-    <EditText
-        android:id="@+id/ExerciseTypeInputBox"
-        android:layout_width="173dp"
-        android:layout_height="42dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ExerciseTypeText" />
-
-    <TextView
-        android:id="@+id/ExerciseText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/exercise_text"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ExerciseTypeText"
-        tools:text="@string/exercise_text" />
-
-    <EditText
-        android:id="@+id/ExerciseInputBox"
-        android:layout_width="174dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ExerciseText" />
-
-    <TextView
-        android:id="@+id/LiftText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/lift_text"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ExerciseText"
-        tools:text="@string/lift_text" />
-
-    <EditText
-        android:id="@+id/LiftInputBox"
-        android:layout_width="175dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/LiftText" />
-
-    <TextView
-        android:id="@+id/RepetitionsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/repetitions_text"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LiftText"
-        tools:text="@string/repetitions_text" />
-
-    <EditText
-        android:id="@+id/RepetitionsInputBox"
-        android:layout_width="174dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/RepetitionsText" />
+        android:layout_above="@id/GoToCalculatorButton"
+        android:src="@drawable/login_page_background"/>
 
     <Button
-        android:id="@+id/RegularPlateStandardsButton"
-        android:layout_width="186dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/regular_plates_standards_text"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@+id/CalculateButton"
-        app:layout_constraintTop_toBottomOf="@+id/RepetitionsText"
-        tools:text="@string/regular_plates_standards_text" />
+        android:id="@+id/GoToCalculatorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corners_blue_background"
+        android:layout_above="@id/GoToProfileButton"
+        android:text="@string/go_to_calculator_button_text"
+        android:textSize="24sp" />
 
     <Button
-        android:id="@+id/PowerliftingPlateStandardsButton"
-        android:layout_width="186dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/powerlifting_plates_standards_text"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/CalculateButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/RegularPlateStandardsButton"
-        app:layout_constraintTop_toTopOf="@+id/RegularPlateStandardsButton"
-        tools:text="@string/powerlifting_plates_standards_text" />
+        android:id="@+id/GoToProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/rounded_corners_blue_background"
+        android:text="@string/go_to_profile_button_text"
+        android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/CalculateButton"
-        android:layout_width="380dp"
-        android:layout_height="69dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/TealBlue"
-        android:text="@string/calculate_button_text"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RegularPlateStandardsButton"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="@string/calculate_button_text" />
 
-</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

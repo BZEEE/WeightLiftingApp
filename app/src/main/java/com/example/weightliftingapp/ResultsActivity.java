@@ -7,10 +7,16 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
-import static com.example.weightliftingapp.RepMaxCalculator.*;
-import static com.example.weightliftingapp.RepMaxAlgorithms.*;
+import static com.example.weightliftingapp.RepMaxCalculatorActivity.*;
+import static com.example.weightliftingapp.WilksCalculatorActivity.*;
+import static com.example.weightliftingapp.IPFCalculatorActivity.*;
+
+
 
 public class ResultsActivity extends AppCompatActivity {
+    private String checkFlag;
+    private TextView calculatorTitle;
+    private TextView calculatorResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,19 +24,52 @@ public class ResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_results);
 
         Intent intent = getIntent();
-        double liftResponse = intent.getDoubleExtra(MainActivity.liftResponseAppId, 0);
-        int repetitionResponse = intent.getIntExtra(MainActivity.repetitionResponseAppId, 0);
+        // this flag is referenced from RepMaxCalculatorActivity.java
+        this.checkFlag = intent.getStringExtra(flag);
 
-        // run calculator using RepMaxCalculator
-        // ...
-        // make sure to return the convert the value to a String before assigning it to the TextView below
-        RepMaxCalculator calculator = new RepMaxCalculator();
-        double oneRepMaxValue = calculator.Calculate(liftResponse, repetitionResponse, RepMaxAlgorithms.Epley);
+        // get result UI so we can pass calculations to it
+        this.calculatorTitle = findViewById(R.id.results_title);
+        this.calculatorResponse = findViewById(R.id.results_value);
 
-        // set response value to the TextView of this activity
-        TextView OneRepMaxResult = findViewById(R.id.one_rep_max_result_value);
-        OneRepMaxResult.setText(String.format(Locale.CANADA, "%1$.1f", oneRepMaxValue));
+        // determine which calculator activity started the results activity
+        switch (this.checkFlag)  {
+            case repMaxCalculatorId:
+                double liftResponse = intent.getDoubleExtra(liftResponseAppId, 0);
+                int repetitionResponse = intent.getIntExtra(repetitionResponseAppId, 0);
+                // run calculator using RepMaxCalculator
 
+                // make sure to return the convert the value to a String before assigning it to the TextView below
+                RepMaxCalculator repMaxCalculator = new RepMaxCalculator();
+                double oneRepMaxValue = repMaxCalculator.Calculate(liftResponse, repetitionResponse, RepMaxAlgorithms.Epley);
+
+                // set response value to the TextView of this activity
+                this.calculatorTitle.setText(oneRepMaxDisplayTitle);
+                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.2f", oneRepMaxValue));
+                break;
+
+            case wilksCalculatorId:
+                double bodyWeightResponse = intent.getDoubleExtra(bodyWeightResponseAppId, 0);
+                String genderResponse = intent.getStringExtra(genderResponseAppId);
+                // run calculator using WilksCalculator
+                // make sure to return the convert the value to a String before assigning it to the TextView below
+                WilksCalculator wilksCalculator = new WilksCalculator();
+                double wilksValue = wilksCalculator.Calculate(bodyWeightResponse, genderResponse);
+
+                // set response value to the TextView of this activity
+                this.calculatorTitle.setText(wilksDisplayTitle);
+                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.3f", wilksValue));
+                break;
+
+            case ipfPointCalculatorId:
+
+                // set response value to the TextView of this activity
+                this.calculatorTitle.setText(ipfDisplayTitle);
+                break;
+
+            default:
+                // throw error if calculator doesnt exist
+                break;
+        }
 
     }
 }
