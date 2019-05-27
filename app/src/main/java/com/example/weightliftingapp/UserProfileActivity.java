@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
@@ -166,6 +168,7 @@ public class UserProfileActivity extends AppCompatActivity
 
     private void updateUI(FirebaseUser user) {
         // update the UI elements of the user's profile page
+        // update whatever contents of the profile we want
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName("Jane Q. User")
@@ -179,6 +182,63 @@ public class UserProfileActivity extends AppCompatActivity
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User profile updated.");
                         }
+                    }
+                });
+    }
+
+    private void getUserProfile() {
+        // get user specific profile information
+    }
+
+    private void resetUsername(String password) {
+        // reset user's username
+        // provide toast message saying username was changed
+        // perform null checks to see if a user is signed in
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.updatePassword(password)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User email address updated.");
+                        }
+                    }
+                });
+    }
+
+    private void resetPassword(String email) {
+        // reset user's password
+        // provide toast message saying password was changed
+        // perform null checks to see if a user is signed in
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.updateEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "User email address updated.");
+                        }
+                    }
+                });
+    }
+
+    private void deleteUserProfile(String email, String password) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Get auth credentials from the user for re-authentication. The example below shows
+        // email and password credentials but there are multiple possible providers,
+        // such as GoogleAuthProvider or FacebookAuthProvider.
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(email, password);
+
+        // Prompt the user to re-provide their sign-in credentials
+        user.reauthenticate(credential)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d(TAG, "User re-authenticated.");
                     }
                 });
     }
