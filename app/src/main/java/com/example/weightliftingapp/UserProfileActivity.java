@@ -19,28 +19,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.weightliftingapp.Firebase.FirebaseAuthenticationManager;
+import com.example.weightliftingapp.Firebase.FirebaseDatabaseManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import static com.example.weightliftingapp.LoginActivity.emailAppId;
-import static com.example.weightliftingapp.LoginActivity.passwordAppId;
+import static com.example.weightliftingapp.ui.login.wLoginActivity.passwordAppId;
+import static com.example.weightliftingapp.ui.login.wLoginActivity.usernameAppId;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth fAuth;
-    private FirebaseDatabase fDatabase;
     private static final String TAG = "debugging";
     private String email;
     private String password;
@@ -67,40 +61,11 @@ public class UserProfileActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
-        // initialize an instance to google fire base authentication
-        fAuth = FirebaseAuth.getInstance();
-        // initialize an instance to google real time database
-        fDatabase = FirebaseDatabase.getInstance();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
-        Intent intent = getIntent();
-
-        this.email = intent.getStringExtra(emailAppId);
-        this.password = intent.getStringExtra(passwordAppId);
-
-        fAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = fAuth.getCurrentUser();
-                            // updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(UserProfileActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            // updateUI(null);
-                        }
-                    }
-                });
 
         // update UI function retreives users specific data and populates the profile
         // ad acheivements activities with that data
@@ -189,6 +154,8 @@ public class UserProfileActivity extends AppCompatActivity
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "User profile updated.");
+                        } else {
+                            Log.d(TAG, "User profile not able to update.");
                         }
                     }
                 });
@@ -196,83 +163,5 @@ public class UserProfileActivity extends AppCompatActivity
 
     private void getUserProfile() {
         // get user specific profile information
-    }
-
-    private void resetUsername(String password) {
-        // reset user's username
-        // provide toast message saying username was changed
-        // perform null checks to see if a user is signed in
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        user.updatePassword(password)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User email address updated.");
-                        }
-                    }
-                });
-    }
-
-    private void resetPassword(String email) {
-        // reset user's password
-        // provide toast message saying password was changed
-        // perform null checks to see if a user is signed in
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        user.updateEmail(email)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User email address updated.");
-                        }
-                    }
-                });
-    }
-
-    private void deleteUserProfile(String email, String password) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        // Get auth credentials from the user for re-authentication. The example below shows
-        // email and password credentials but there are multiple possible providers,
-        // such as GoogleAuthProvider or FacebookAuthProvider.
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(email, password);
-
-        // Prompt the user to re-provide their sign-in credentials
-        user.reauthenticate(credential)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Log.d(TAG, "User re-authenticated.");
-                    }
-                });
-    }
-
-    private void writeToDatabase(String location, String message) {
-        DatabaseReference refLocation = fDatabase.getReference(location);
-        refLocation.setValue(message);
-
-    }
-
-    private void readFromDatabase(DatabaseReference refLocation) {
-        // Read from the database
-        refLocation.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d(TAG, "Value is: " + value);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
     }
 }

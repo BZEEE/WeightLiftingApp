@@ -2,18 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@color/general_background"
-    tools:context=".LoginActivity">
+    tools:context=".ui.login.wLoginActivity">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/LoginTitle"
         android:src="@drawable/login_page_background"/>
+
     <TextView
         android:id="@+id/LoginTitle"
         android:layout_width="match_parent"
@@ -24,38 +26,51 @@
         android:textColor="@color/white"
         android:textStyle="bold|italic"
         android:text="@string/login_title"
-        android:layout_above="@id/EmailInputBox"
+        android:layout_above="@id/username"
         />
+
     <EditText
-        android:id="@+id/EmailInputBox"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:layout_centerVertical="true"
         android:backgroundTint="@color/white"
-        android:hint="@string/username" />
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:selectAllOnFocus="true" />
 
     <EditText
-        android:id="@+id/PasswordInputBox"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
         android:textColor="@color/white"
         android:layout_marginBottom="30dp"
         android:backgroundTint="@color/white"
         android:textColorHint="@color/white"
-        android:layout_below="@id/EmailInputBox"
-        android:hint="@string/password" />
+        android:layout_below="@id/username"
+        android:hint="@string/prompt_password"
+        android:imeActionLabel="@string/action_sign_in_short"
+        android:imeOptions="actionDone"
+        android:inputType="textPassword"
+        android:selectAllOnFocus="true" />
 
     <Button
-        android:id="@+id/LoginButton"
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_blue_background"
-        android:layout_below="@id/PasswordInputBox"
-        android:text="@string/login_button_text"
-        android:textSize="24sp" />
+        android:layout_below="@id/password"
+        android:textSize="24sp"
+        android:enabled="false"
+        android:text="@string/action_sign_in" />
 
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@id/login"
+        android:visibility="gone" />
 </RelativeLayout>
