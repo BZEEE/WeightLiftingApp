@@ -14,8 +14,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,10 @@ public class wLoginActivity extends AppCompatActivity {
 
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
+        final TextView RegisterTextView = findViewById(R.id.RegisterTextView);
+        final TextView loginErrorTextView = findViewById(R.id.LoginErrorTextView);
+        final TextView LoginTextView = findViewById(R.id.LoginTextView);
+        final Switch RegisterOrLoginSwitch = findViewById(R.id.RegisterOrLoginSwitch);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -76,20 +82,33 @@ public class wLoginActivity extends AppCompatActivity {
                     String email = usernameEditText.getText().toString();
                     String password = passwordEditText.getText().toString();
 
-                    if (FirebaseDatabaseManager.UsernameExistsInDatabase(email)) {
-                        // if the email exists in the database it is a returning user
+                    if (RegisterOrLoginSwitch.isChecked()) {
+                        // user wants to login
                         FirebaseAuthenticationManager.SignInExistingUser(email, password);
+
                     } else {
-                        // else it is a new user that we have to authenticate
-                        FirebaseAuthenticationManager.CreateNewUserAccount(email, password);
+                        // user wants to register
+                        if (FirebaseDatabaseManager.UsernameExistsInDatabase(email)) {
+                            // if the email exists in the database, inform user, has to be a unique email/username
+                            // display error message
+                            loginErrorTextView.setText("username already exists, choose a different one");
+
+                        } else {
+                            // else it is a new user that we have to authenticate
+                            loginErrorTextView.setText("");
+                            FirebaseAuthenticationManager.CreateNewUserAccount(email, password);
+                        }
                     }
-                    // to make sure the GetCurrentUser() function in FirebaseAuth receives a fresh token every time
-                    FirebaseAuthenticationManager.AttachAuthStateListener();
 
-                    // Go to user profile activity
-                    goToUserProfileActivity();
-
-                    updateUiWithUser(loginResult.getSuccess());
+                    // check to see if authentication with firebase failed
+                    if (FirebaseAuthenticationManager.GetCurrentUser() != null) {
+                        // to make sure the GetCurrentUser() function in FirebaseAuth receives a fresh token every time
+                        FirebaseAuthenticationManager.AttachAuthStateListener();
+                        // Go to user profile activity
+                        goToUserProfileActivity();
+                        // update UI with user view model
+                        updateUiWithUser(loginResult.getSuccess());
+                    }
                 }
                 setResult(Activity.RESULT_OK);
 
@@ -129,12 +148,31 @@ public class wLoginActivity extends AppCompatActivity {
             }
         });
 
+
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        RegisterOrLoginSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // user wants to login
+                    RegisterTextView.setTextColor(getResources().getColor(R.color.fadedGrey));
+                    LoginTextView.setTextColor(getResources().getColor(R.color.TealBlue));
+                    loginButton.setText(R.string.action_login);
+                } else {
+                    // user wants to register
+                    RegisterTextView.setTextColor(getResources().getColor(R.color.TealBlue));
+                    LoginTextView.setTextColor(getResources().getColor(R.color.fadedGrey));
+                    loginButton.setText(R.string.action_register);
+                }
             }
         });
     }

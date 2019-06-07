@@ -29,6 +29,15 @@
         android:layout_above="@id/username"
         />
 
+    <TextView
+        android:id="@+id/LoginErrorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:gravity="center"
+        android:layout_above="@id/username"
+        android:textSize="28sp"/>
+
     <EditText
         android:id="@+id/username"
         android:layout_width="match_parent"
@@ -64,6 +73,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/RegisterTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/RegisterOrLoginSwitch"
@@ -83,6 +93,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/LoginTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/RegisterOrLoginSwitch"
