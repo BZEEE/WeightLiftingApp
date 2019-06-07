@@ -26,7 +26,7 @@
         android:textColor="@color/white"
         android:textStyle="bold|italic"
         android:text="@string/login_title"
-        android:layout_above="@id/username"
+        android:layout_above="@id/LoginErrorTextView"
         />
 
     <TextView
