@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
     // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
     implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+
+    // firebase cloud firestore permission
+    implementation 'com.google.firebase:firebase-firestore:19.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
