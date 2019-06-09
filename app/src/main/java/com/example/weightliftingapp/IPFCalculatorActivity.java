@@ -7,10 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class IPFCalculatorActivity extends AppCompatActivity {
+public class dsIPFCalculatorActivity extends AppCompatActivity {
 
+    private EditText bodyWeightInputBox;
     private Button calculateButton;
+    private Spinner genderInputSpinner;
+    private String genderResponse;
     private static final String flag = "com.example.weightliftingapp.calculatorFlag";
+    public static final String bodyWeightResponseAppId = "com.example.weightliftingapp.bodyWeight";
+    public static final String genderResponseAppId = "com.example.weightliftingapp.gender";
     public static final String ipfPointCalculatorId = "ipfPointCalculatorActivity";
     public static final String ipfDisplayTitle = "Your IPF Score";
 
@@ -30,6 +35,12 @@ public class IPFCalculatorActivity extends AppCompatActivity {
                 OpenResultsActivity();
             }
         });
+        this.bodyWeightInputBox = findViewById(R.id.BodyWeightInputBox);
+        this.genderInputSpinner = findViewById(R.id.GenderInputSpinner);
+        ArrayAdapter <Charsequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.gender_array, R.layout.gender_spinner_custom_attributes);
+        adapter.SetDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.genderInputSpinner.setAdapter(adapter);
     }
 
     private void OpenResultsActivity() {

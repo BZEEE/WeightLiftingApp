@@ -61,9 +61,14 @@ public class ResultsActivity extends AppCompatActivity {
                 break;
 
             case ipfPointCalculatorId:
+                double bodyWeightResponse = intent.getDoubleExtra(bodyWeightResponseAppId, 0);
+                String genderResponse = intent.getStringExtra(genderResponseAppId);
 
+                ipfPointCalculator ipfPointCalculator = new IPFCalculator();
+                double IPFpoints = ipfPointCalculator.Calculate(bodyWeightResponse,genderResponse);
                 // set response value to the TextView of this activity
-                this.calculatorTitle.setText(ipfDisplayTitle);
+                this.calculatorTitle.setText(IPFDisplayTitle);
+                this.calculatorResponse.setText(String.format(Locale.CANADA,"%1$.3f", IPFPoints));
                 break;
 
             default:
