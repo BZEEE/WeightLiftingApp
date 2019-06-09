@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.weightliftingapp.ui.login.wLoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button goToCalculatorsButton;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void OpenLogInActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, wLoginActivity.class);
         startActivity(intent);
     }
 }
