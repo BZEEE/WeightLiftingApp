@@ -19,16 +19,47 @@
         android:textColor="@color/white"
         android:textStyle="bold|italic"
         android:text="@string/IPF_activity_title"
-        android:layout_above="@id/IPFCalculateButton"
-        />
+        android:layout_above="@id/TotalIPFInputBox" />
+
+    <EditText
+        android:id="@+id/TotalIPFInputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_above="@id/BodyWeightIPFInputBox"
+        android:hint="@string/IPF_total_text" />
+
+    <EditText
+        android:id="@+id/BodyWeightIPFInputBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/white"
+        android:hint="@string/body_weight_text" />
+
+    <Spinner
+        android:id="@+id/GenderIPFInputSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/white"
+        android:layout_below="@id/BodyWeightIPFInputBox"
+        android:hint="@string/gender_text" />
 
     <Button
         android:id="@+id/IPFCalculateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_blue_background"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/GenderIPFInputSpinner"
         android:text="@string/calculate_button_text"
         android:textSize="24sp" />
 

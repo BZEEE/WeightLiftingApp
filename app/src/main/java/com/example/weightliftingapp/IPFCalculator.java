@@ -2,7 +2,7 @@ package com.example.weightliftingapp;
 
 public class IPFCalculator implements IIPFPoint {
 
-    public double Calculate(double total, double bodyWeight, char sex) {
+    public double Calculate(double total, double bodyWeight, String gender) {
         // takes lifter's 3-lift total in (in kilograms) and converts to a score (only for raw/classic).
         // adding in simple lifts just requires more variables
         double C1;
@@ -14,7 +14,7 @@ public class IPFCalculator implements IIPFPoint {
         }
         else {
             // initialize male constants
-            if (sex == 'M'){
+            if (gender.equals("Male")){
                 C1 = 3106700;
                 C2 = 8577850;
                 C3 = 532160;

@@ -29,8 +29,7 @@
     <string name="wilks_activity_title">Wilks Calculator</string>
 
     <!--IPF Activity Page-->
-    <string name="IPF_text">enter lift amount</string>
-    <string name="dude_text">how many repetitions</string>
+    <string name="IPF_total_text">Enter your 3 lift Total</string>
     <string name="IPF_activity_title">IPF Calculator</string>
 
     <string name="calculate_button_text">Calculate</string>

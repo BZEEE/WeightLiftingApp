@@ -13,10 +13,9 @@ public class WilksCalculatorActivity extends AppCompatActivity {
     private EditText bodyWeightInputBox;
     private Button calculateButton;
     private Spinner genderInputSpinner;
-    private String genderResponse;
     private static final String flag = "com.example.weightliftingapp.calculatorFlag";
-    public static final String bodyWeightResponseAppId = "com.example.weightliftingapp.bodyWeight";
-    public static final String genderResponseAppId = "com.example.weightliftingapp.gender";
+    public static final String bodyWeightResponseWilksAppId = "com.example.weightliftingapp.bodyWeightWilks";
+    public static final String genderResponseWilksAppId = "com.example.weightliftingapp.genderWilks";
     public static final String wilksDisplayTitle = "Your Wilks Score";
     public static final String wilksCalculatorId = "WilksCalculatorActivity";
 
@@ -37,9 +36,9 @@ public class WilksCalculatorActivity extends AppCompatActivity {
             }
         });
 
-        this.bodyWeightInputBox = findViewById(R.id.BodyWeightInputBox);
+        this.bodyWeightInputBox = findViewById(R.id.BodyWeightWilksInputBox);
 
-        this.genderInputSpinner = findViewById(R.id.GenderInputSpinner);
+        this.genderInputSpinner = findViewById(R.id.GenderWilksInputSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter <CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.gender_array, R.layout.gender_spinner_custom_attributes);
@@ -51,13 +50,13 @@ public class WilksCalculatorActivity extends AppCompatActivity {
 
     private void OpenResultsActivity() {
         double bodyWeightResponse = Double.parseDouble(this.bodyWeightInputBox.getText().toString());
-        this.genderResponse = this.genderInputSpinner.getSelectedItem().toString();
+        String genderResponse = this.genderInputSpinner.getSelectedItem().toString();
 
         Intent intent = new Intent(this, ResultsActivity.class);
         // create a flag to help the results activity determine which calculator opened it
         intent.putExtra(flag, wilksCalculatorId);
-        intent.putExtra(bodyWeightResponseAppId, bodyWeightResponse);
-         intent.putExtra(genderResponseAppId, genderResponse);
+        intent.putExtra(bodyWeightResponseWilksAppId, bodyWeightResponse);
+        intent.putExtra(genderResponseWilksAppId, genderResponse);
         startActivity(intent);
     }
 }

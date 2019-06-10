@@ -7,10 +7,13 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import static com.example.weightliftingapp.IPFCalculatorActivity.bodyWeightResponseIPFAppId;
+import static com.example.weightliftingapp.IPFCalculatorActivity.genderResponseIPFAppId;
+import static com.example.weightliftingapp.IPFCalculatorActivity.ipfDisplayTitle;
+import static com.example.weightliftingapp.IPFCalculatorActivity.ipfPointCalculatorId;
+import static com.example.weightliftingapp.IPFCalculatorActivity.totalResponseIPFAppId;
 import static com.example.weightliftingapp.RepMaxCalculatorActivity.*;
 import static com.example.weightliftingapp.WilksCalculatorActivity.*;
-import static com.example.weightliftingapp.IPFCalculatorActivity.*;
-
 
 
 public class ResultsActivity extends AppCompatActivity {
@@ -20,6 +23,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
@@ -48,12 +52,12 @@ public class ResultsActivity extends AppCompatActivity {
                 break;
 
             case wilksCalculatorId:
-                double bodyWeightResponse = intent.getDoubleExtra(bodyWeightResponseAppId, 0);
-                String genderResponse = intent.getStringExtra(genderResponseAppId);
+                double bodyWeightWilksResponse = intent.getDoubleExtra(bodyWeightResponseWilksAppId, 0);
+                String genderWilksResponse = intent.getStringExtra(genderResponseWilksAppId);
                 // run calculator using WilksCalculator
                 // make sure to return the convert the value to a String before assigning it to the TextView below
                 WilksCalculator wilksCalculator = new WilksCalculator();
-                double wilksValue = wilksCalculator.Calculate(bodyWeightResponse, genderResponse);
+                double wilksValue = wilksCalculator.Calculate(bodyWeightWilksResponse, genderWilksResponse);
 
                 // set response value to the TextView of this activity
                 this.calculatorTitle.setText(wilksDisplayTitle);
@@ -61,14 +65,15 @@ public class ResultsActivity extends AppCompatActivity {
                 break;
 
             case ipfPointCalculatorId:
-                double bodyWeightResponse = intent.getDoubleExtra(bodyWeightResponseAppId, 0);
-                String genderResponse = intent.getStringExtra(genderResponseAppId);
+                double totalIPFResponse = intent.getDoubleExtra(totalResponseIPFAppId, 0);
+                double bodyWeightIPFResponse = intent.getDoubleExtra(bodyWeightResponseIPFAppId, 0);
+                String genderIPFResponse = intent.getStringExtra(genderResponseIPFAppId);
 
-                ipfPointCalculator ipfPointCalculator = new IPFCalculator();
-                double IPFpoints = ipfPointCalculator.Calculate(bodyWeightResponse,genderResponse);
+                IPFCalculator ipfPointCalculator = new IPFCalculator();
+                double IPFpoints = ipfPointCalculator.Calculate(totalIPFResponse, bodyWeightIPFResponse, genderIPFResponse);
                 // set response value to the TextView of this activity
-                this.calculatorTitle.setText(IPFDisplayTitle);
-                this.calculatorResponse.setText(String.format(Locale.CANADA,"%1$.3f", IPFPoints));
+                this.calculatorTitle.setText(ipfDisplayTitle);
+                this.calculatorResponse.setText(String.format(Locale.CANADA,"%1$.3f", IPFpoints));
                 break;
 
             default:

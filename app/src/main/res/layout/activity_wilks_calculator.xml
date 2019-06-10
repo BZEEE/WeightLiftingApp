@@ -19,11 +19,11 @@
         android:textColor="@color/white"
         android:textStyle="bold|italic"
         android:text="@string/wilks_activity_title"
-        android:layout_above="@id/BodyWeightInputBox"
+        android:layout_above="@id/BodyWeightWilksInputBox"
         />
 
     <EditText
-        android:id="@+id/BodyWeightInputBox"
+        android:id="@+id/BodyWeightWilksInputBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
@@ -35,13 +35,13 @@
         android:hint="@string/body_weight_text" />
 
     <Spinner
-        android:id="@+id/GenderInputSpinner"
+        android:id="@+id/GenderWilksInputSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:textColor="@color/white"
         android:backgroundTint="@color/white"
-        android:layout_below="@id/BodyWeightInputBox"
+        android:layout_below="@id/BodyWeightWilksInputBox"
         android:hint="@string/gender_text" />
 
     <Button
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners_blue_background"
-        android:layout_below="@id/GenderInputSpinner"
+        android:layout_below="@id/GenderWilksInputSpinner"
         android:text="@string/calculate_button_text"
         android:textSize="24sp" />
 
