@@ -28,4 +28,14 @@
         android:layout_centerVertical="true"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/goToARWeightsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/see_weights_in_AR"
+        android:layout_below="@id/results_value"
+        android:textSize="24sp"
+        android:background="@drawable/rounded_corners_blue_background"/>
+
 </RelativeLayout>

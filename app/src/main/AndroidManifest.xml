@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.weightliftingapp">
+    <!-- "AR Optional" apps must declare minSdkVersion ≥ 14 -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -9,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ARWeightResultsActivity"></activity>
         <activity
             android:name=".ui.login.wLoginActivity"
-            android:label="@string/title_activity_w_login"></activity>
+            android:label="@string/title_activity_w_login" />
         <activity android:name=".Wilks.WilksCalculatorActivity" />
         <activity android:name=".AchievementsActivity" />
         <activity android:name=".IPF.IPFCalculatorActivity" />
@@ -29,6 +32,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--
+ Indicates that app supports, but does not require ARCore ("AR Optional").
+         Unlike "AR Required" apps, Google Play Store will not automatically
+         download and install ARCore when the app is installed.
+        -->
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="optional" />
     </application>
 
 </manifest>

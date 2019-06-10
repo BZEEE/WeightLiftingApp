@@ -1,14 +1,19 @@
 package com.example.weightliftingapp;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.weightliftingapp.IPF.IPFCalculator;
 import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
 import com.example.weightliftingapp.OneRepMax.RepMaxCalculator;
 import com.example.weightliftingapp.Wilks.WilksCalculator;
+import com.example.weightliftingapp.Wilks.WilksCalculatorActivity;
+import com.google.ar.core.ArCoreApk;
 
 import java.util.Locale;
 
@@ -25,6 +30,7 @@ public class ResultsActivity extends AppCompatActivity {
     private String checkFlag;
     private TextView calculatorTitle;
     private TextView calculatorResponse;
+    private Button augmentedRealityButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +46,20 @@ public class ResultsActivity extends AppCompatActivity {
         this.calculatorTitle = findViewById(R.id.results_title);
         this.calculatorResponse = findViewById(R.id.results_value);
 
+        // place bar for user through AR, requires API version 24 or higher for ARCore library
+        // default Arcore uses sceneform which might suffice for our purposes
+        //  Opengl 3.0 is requires by the emulator
+        this.augmentedRealityButton = findViewById(R.id.goToARWeightsButton);
+
+
+
         // determine which calculator activity started the results activity
         switch (this.checkFlag)  {
             case repMaxCalculatorId:
+
+                // check if device enables ArCore
+                DeviceEnablesArCore();
+
                 double liftResponse = intent.getDoubleExtra(liftResponseAppId, 0);
                 int repetitionResponse = intent.getIntExtra(repetitionResponseAppId, 0);
                 // run calculator using RepMaxCalculator
@@ -86,5 +103,40 @@ public class ResultsActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    private void DeviceEnablesArCore() {
+        ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
+        if (availability.isTransient()) {
+            // Re-query at 5Hz while compatibility is checked in the background.
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // recursive call to re-check if the devices support AR capabilities
+                    // delay for 200 milliseconds, then re-query the check
+                    DeviceEnablesArCore();
+                }
+            }, 200);
+        }
+        if (availability.isSupported()) {
+            // AR is supported
+            augmentedRealityButton.setVisibility(View.VISIBLE);
+            augmentedRealityButton.setEnabled(true);
+            // set on click listener since the button is visible
+            augmentedRealityButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GoToWeightsARView();
+                }
+            });
+        } else { // Unsupported or unknown.
+            augmentedRealityButton.setVisibility(View.INVISIBLE);
+            augmentedRealityButton.setEnabled(false);
+        }
+    }
+
+    private void GoToWeightsARView() {
+        Intent intent = new Intent(this, ARWeightResultsActivity.class);
+        startActivity(intent);
     }
 }

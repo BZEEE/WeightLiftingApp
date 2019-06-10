@@ -35,6 +35,7 @@
     <string name="calculate_button_text">Calculate</string>
 
     <!--Results Activity-->
+    <string name="see_weights_in_AR">See Weights In AR</string>
 
     <!--Calculator Selection Activity-->
     <string name="calculator_selection_activity_title">Select Calculator</string>
