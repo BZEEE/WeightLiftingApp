@@ -17,20 +17,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.Toast;
 
-import com.example.weightliftingapp.Firebase.FirebaseAuthenticationManager;
-import com.example.weightliftingapp.Firebase.FirebaseDatabaseManager;
+import com.example.weightliftingapp.IPF.IPFCalculatorActivity;
+import com.example.weightliftingapp.OneRepMax.RepMaxCalculatorActivity;
+import com.example.weightliftingapp.Wilks.WilksCalculatorActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.FirebaseDatabase;
-
-import static com.example.weightliftingapp.ui.login.wLoginActivity.passwordAppId;
-import static com.example.weightliftingapp.ui.login.wLoginActivity.usernameAppId;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

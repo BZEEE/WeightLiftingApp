@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@color/general_background"
-    tools:context=".RepMaxCalculatorActivity">
+    tools:context=".OneRepMax.RepMaxCalculatorActivity">
 
     <TextView
         android:id="@+id/OneRepMaxTitle"

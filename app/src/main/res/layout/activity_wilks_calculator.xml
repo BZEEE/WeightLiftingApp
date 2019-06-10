@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@color/general_background"
-    tools:context=".WilksCalculatorActivity">
+    tools:context=".Wilks.WilksCalculatorActivity">
 
     <TextView
         android:id="@+id/WilksTitle"

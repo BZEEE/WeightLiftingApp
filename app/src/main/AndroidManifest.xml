@@ -12,15 +12,15 @@
         <activity
             android:name=".ui.login.wLoginActivity"
             android:label="@string/title_activity_w_login"></activity>
-        <activity android:name=".WilksCalculatorActivity" />
+        <activity android:name=".Wilks.WilksCalculatorActivity" />
         <activity android:name=".AchievementsActivity" />
-        <activity android:name=".IPFCalculatorActivity" />
+        <activity android:name=".IPF.IPFCalculatorActivity" />
         <activity
             android:name=".UserProfileActivity"
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".CalculatorSelectionActivity" />
-        <activity android:name=".RepMaxCalculatorActivity" />
+        <activity android:name=".OneRepMax.RepMaxCalculatorActivity" />
         <activity android:name=".ResultsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

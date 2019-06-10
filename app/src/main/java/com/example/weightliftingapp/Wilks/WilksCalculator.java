@@ -1,4 +1,4 @@
-package com.example.weightliftingapp;
+package com.example.weightliftingapp.Wilks;
 
 
 public class WilksCalculator implements IWilks {

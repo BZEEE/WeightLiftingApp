@@ -1,4 +1,4 @@
-package com.example.weightliftingapp;
+package com.example.weightliftingapp.OneRepMax;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.weightliftingapp.R;
+import com.example.weightliftingapp.ResultsActivity;
 
 public class RepMaxCalculatorActivity extends AppCompatActivity {
 

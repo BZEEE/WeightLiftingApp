@@ -5,15 +5,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.weightliftingapp.IPF.IPFCalculator;
+import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
+import com.example.weightliftingapp.OneRepMax.RepMaxCalculator;
+import com.example.weightliftingapp.Wilks.WilksCalculator;
+
 import java.util.Locale;
 
-import static com.example.weightliftingapp.IPFCalculatorActivity.bodyWeightResponseIPFAppId;
-import static com.example.weightliftingapp.IPFCalculatorActivity.genderResponseIPFAppId;
-import static com.example.weightliftingapp.IPFCalculatorActivity.ipfDisplayTitle;
-import static com.example.weightliftingapp.IPFCalculatorActivity.ipfPointCalculatorId;
-import static com.example.weightliftingapp.IPFCalculatorActivity.totalResponseIPFAppId;
-import static com.example.weightliftingapp.RepMaxCalculatorActivity.*;
-import static com.example.weightliftingapp.WilksCalculatorActivity.*;
+import static com.example.weightliftingapp.IPF.IPFCalculatorActivity.bodyWeightResponseIPFAppId;
+import static com.example.weightliftingapp.IPF.IPFCalculatorActivity.genderResponseIPFAppId;
+import static com.example.weightliftingapp.IPF.IPFCalculatorActivity.ipfDisplayTitle;
+import static com.example.weightliftingapp.IPF.IPFCalculatorActivity.ipfPointCalculatorId;
+import static com.example.weightliftingapp.IPF.IPFCalculatorActivity.totalResponseIPFAppId;
+import static com.example.weightliftingapp.OneRepMax.RepMaxCalculatorActivity.*;
+import static com.example.weightliftingapp.Wilks.WilksCalculatorActivity.*;
 
 
 public class ResultsActivity extends AppCompatActivity {

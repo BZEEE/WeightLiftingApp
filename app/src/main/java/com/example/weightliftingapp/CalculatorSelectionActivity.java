@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.weightliftingapp.IPF.IPFCalculatorActivity;
+import com.example.weightliftingapp.OneRepMax.RepMaxCalculatorActivity;
+import com.example.weightliftingapp.Wilks.WilksCalculatorActivity;
+
 public class CalculatorSelectionActivity extends AppCompatActivity {
 
     private Button goToOneRepMaxCalculatorButton;

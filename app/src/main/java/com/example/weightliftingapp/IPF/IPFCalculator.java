@@ -1,4 +1,6 @@
-package com.example.weightliftingapp;
+package com.example.weightliftingapp.IPF;
+
+import com.example.weightliftingapp.IPF.IIPFPoint;
 
 public class IPFCalculator implements IIPFPoint {
 

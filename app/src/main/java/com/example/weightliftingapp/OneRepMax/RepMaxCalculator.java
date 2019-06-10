@@ -1,7 +1,10 @@
-package com.example.weightliftingapp;
+package com.example.weightliftingapp.OneRepMax;
+import com.example.weightliftingapp.OneRepMax.IOneRepMax;
+import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
+
 import java.util.ArrayList;
 
-public class RepMaxCalculator implements IOneRepMax{
+public class RepMaxCalculator implements IOneRepMax {
     private static double[] standardPlates = {45, 35, 25, 15, 10, 5, 2.5};
     private static double[] PowerliftingPlates = {55.1155, 44.0924, 33.0693, 22.0462, 11.0231, 5.51155, 2.755775, 1.10231};
 

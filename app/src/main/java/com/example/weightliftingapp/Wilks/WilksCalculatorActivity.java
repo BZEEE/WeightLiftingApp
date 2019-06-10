@@ -1,4 +1,4 @@
-package com.example.weightliftingapp;
+package com.example.weightliftingapp.Wilks;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.weightliftingapp.R;
+import com.example.weightliftingapp.ResultsActivity;
 
 public class WilksCalculatorActivity extends AppCompatActivity {
     private EditText bodyWeightInputBox;

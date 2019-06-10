@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@color/general_background"
-    tools:context=".IPFCalculatorActivity">
+    tools:context=".IPF.IPFCalculatorActivity">
 
     <TextView
         android:id="@+id/IPFTitle"
