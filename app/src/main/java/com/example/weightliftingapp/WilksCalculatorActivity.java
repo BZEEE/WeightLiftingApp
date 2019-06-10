@@ -41,7 +41,7 @@ public class WilksCalculatorActivity extends AppCompatActivity {
 
         this.genderInputSpinner = findViewById(R.id.GenderInputSpinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter <CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.gender_array, R.layout.gender_spinner_custom_attributes);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
