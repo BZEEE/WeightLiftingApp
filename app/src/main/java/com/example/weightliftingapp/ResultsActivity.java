@@ -74,6 +74,8 @@ public class ResultsActivity extends AppCompatActivity {
                 break;
 
             case wilksCalculatorId:
+                // disable AR since it is not needed for Wilks
+                DisableARButton();
                 double bodyWeightWilksResponse = intent.getDoubleExtra(bodyWeightResponseWilksAppId, 0);
                 String genderWilksResponse = intent.getStringExtra(genderResponseWilksAppId);
                 // run calculator using WilksCalculator
@@ -87,6 +89,9 @@ public class ResultsActivity extends AppCompatActivity {
                 break;
 
             case ipfPointCalculatorId:
+                // disable AR since it is not needed for IPF
+                DisableARButton();
+
                 double totalIPFResponse = intent.getDoubleExtra(totalResponseIPFAppId, 0);
                 double bodyWeightIPFResponse = intent.getDoubleExtra(bodyWeightResponseIPFAppId, 0);
                 String genderIPFResponse = intent.getStringExtra(genderResponseIPFAppId);
@@ -120,19 +125,28 @@ public class ResultsActivity extends AppCompatActivity {
         }
         if (availability.isSupported()) {
             // AR is supported
-            augmentedRealityButton.setVisibility(View.VISIBLE);
-            augmentedRealityButton.setEnabled(true);
-            // set on click listener since the button is visible
-            augmentedRealityButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    GoToWeightsARView();
-                }
-            });
-        } else { // Unsupported or unknown.
-            augmentedRealityButton.setVisibility(View.INVISIBLE);
-            augmentedRealityButton.setEnabled(false);
+            EnableARButton();
+        } else {
+            // Unsupported or unknown.
+            DisableARButton();
         }
+    }
+
+    private void EnableARButton() {
+        augmentedRealityButton.setVisibility(View.VISIBLE);
+        augmentedRealityButton.setEnabled(true);
+        // set on click listener since the button is visible
+        augmentedRealityButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GoToWeightsARView();
+            }
+        });
+    }
+
+    private void DisableARButton() {
+        augmentedRealityButton.setVisibility(View.INVISIBLE);
+        augmentedRealityButton.setEnabled(false);
     }
 
     private void GoToWeightsARView() {
