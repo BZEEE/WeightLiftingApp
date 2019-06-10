@@ -12,6 +12,7 @@ import android.widget.Spinner;
 public class IPFCalculatorActivity extends AppCompatActivity {
 
     private EditText bodyWeightInputBox;
+    private EditText totalInputBox;
     private Button calculateButton;
     private Spinner genderInputSpinner;
     private static final String flag = "com.example.weightliftingapp.calculatorFlag";
@@ -37,6 +38,7 @@ public class IPFCalculatorActivity extends AppCompatActivity {
                 OpenResultsActivity();
             }
         });
+        this.totalInputBox = findViewById(R.id.TotalIPFInputBox);
         this.bodyWeightInputBox = findViewById(R.id.BodyWeightIPFInputBox);
         this.genderInputSpinner = findViewById(R.id.GenderIPFInputSpinner);
         ArrayAdapter <CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -46,12 +48,14 @@ public class IPFCalculatorActivity extends AppCompatActivity {
     }
 
     private void OpenResultsActivity() {
+        double totalResponse = Double.parseDouble(this.totalInputBox.getText().toString());
         double bodyWeightResponse = Double.parseDouble(this.bodyWeightInputBox.getText().toString());
         String genderResponse = this.genderInputSpinner.getSelectedItem().toString();
 
         Intent intent = new Intent(this, ResultsActivity.class);
         // create a flag to help the results activity determine which calculator opened it
         intent.putExtra(flag, ipfPointCalculatorId);
+        intent.putExtra(totalResponseIPFAppId, totalResponse);
         intent.putExtra(bodyWeightResponseIPFAppId, bodyWeightResponse);
         intent.putExtra(genderResponseIPFAppId, genderResponse);
         startActivity(intent);
