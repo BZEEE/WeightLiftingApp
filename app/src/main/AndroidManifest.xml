@@ -40,6 +40,12 @@
         <meta-data
             android:name="com.google.ar.core"
             android:value="optional" />
+        <!--cloud anchors, need API Key from google cloud platform console-->
+        <!--https://developers.google.com/ar/develop/java/cloud-anchors/quickstart-android-->
+        <!--<meta-data-->
+            <!--android:name="com.google.android.ar.API_KEY"-->
+            <!--android:value="<YOUR_API_KEY>"/>-->
+
     </application>
 
 </manifest>

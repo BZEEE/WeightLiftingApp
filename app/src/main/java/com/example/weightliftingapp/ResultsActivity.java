@@ -112,6 +112,10 @@ public class ResultsActivity extends AppCompatActivity {
 
     private void DeviceEnablesArCore() {
         ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
+//        switch (availability) {
+//            case
+//        }
+
         if (availability.isTransient()) {
             // Re-query at 5Hz while compatibility is checked in the background.
             new Handler().postDelayed(new Runnable() {

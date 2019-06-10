@@ -1,10 +1,15 @@
 apply plugin: 'com.android.application'
 
+
+// Note Sceneform for AR requires min SDK version of 24, may have to update this later
+// this will make our app only available on newer devices, rather than every device
+// wecan probablyget away from using SceneForm by using the Session (built into ArCore) AR class instead
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.weightliftingapp"
-        minSdkVersion 16
+        // changed min level to 24 to get sceneview to work, we can possibly reduce this later
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -15,6 +20,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    // Sceneform libraries use language constructs from Java 8.
+    // Add these compile options if targeting minSdkVersion < 26.
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -49,7 +61,19 @@ dependencies {
 
     // firebase cloud firestore permission
     implementation 'com.google.firebase:firebase-firestore:19.0.2'
+
+    // Provides ARCore Session and related resources.
+    implementation 'com.google.ar:core:1.9.0'
+
+    // Provides ArFragment, and other UX resources.
+    implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.9.0'
+
+    // Alternatively, use ArSceneView without the UX dependency.
+    implementation 'com.google.ar.sceneform:core:1.9.0'
+
+    // enable sceneform to load 3D models at runtime
+    // has to be glTF or glb model files though
+    implementation 'com.google.ar.sceneform:assets:1.9.0'
 }
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
-
