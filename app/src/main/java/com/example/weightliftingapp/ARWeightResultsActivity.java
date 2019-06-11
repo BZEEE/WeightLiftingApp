@@ -37,9 +37,14 @@ public class ARWeightResultsActivity extends AppCompatActivity {
     private boolean mUserRequestedInstall = true;
     private Session mSession;
 
-    private ModelRenderable barRenderable;
     private ArFragment arFragment;
 
+    private float plateRadius = 0.225f; // in metres
+    private float plateHeight = 0.03f;
+
+    private ModelRenderable barGripSectionRenderable;
+    private ModelRenderable barLeftSectionRenderable;
+    private ModelRenderable barRightSectionRenderable;
     private ModelRenderable[] plateRenderables;
     private ArrayList tempContainer;
 
@@ -150,10 +155,23 @@ public class ARWeightResultsActivity extends AppCompatActivity {
     }
 
     private void SetupBarModel() {
-    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red)
+    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+        .thenAccept(
+                material -> {
+                    barLeftSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, -0.8775f, 0.25f), material);
+                });
+
+    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
         .thenAccept(
             material -> {
-                barRenderable = ShapeFactory.makeCylinder(0.1f, 2.0f,  new Vector3(0.0f, 0.0f, 0.0f), material); });
+                barRightSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, 0.8775f, 0.25f), material);
+            });
+
+    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+        .thenAccept(
+            material -> {
+                barGripSectionRenderable = ShapeFactory.makeCylinder(0.014f, 1.31f,  new Vector3(0.0f, 0.0f, 0.25f), material);
+            });
     }
 
     private void SetupPlateModels(ArrayList plateValues, boolean plateFormat) {
@@ -165,10 +183,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                 // assign a color and size to these plates bases on real-world values
 
                 if ((double) plateValues.get(i) == PowerliftingPlatesValues.twentyFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -177,10 +195,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.twentyKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Blue).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -189,10 +207,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.fifteenKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Yellow).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -204,7 +222,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -213,10 +231,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.fiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.White).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -225,10 +243,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.twoPointFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -237,10 +255,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.twoKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Blue).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -249,10 +267,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.onePointFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Yellow).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -264,7 +282,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -273,10 +291,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.zeroPointFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.White).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -298,7 +316,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -311,7 +329,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Blue).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -320,10 +338,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
                             });
                 } else if ((double) plateValues.get(i) == StandardPlatesValues.twentyFivePounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.SomeColor).thenAccept(
+                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -335,7 +353,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Yellow).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -347,7 +365,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -359,7 +377,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Gray).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -371,7 +389,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.White).thenAccept(
                             material -> {
                                 // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(0.5f, 0.05f,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
                                 // adjust global position of plate relative to the bar
                                 // when we add a plate to one end of the bar
                                 // we also have to add it to the other end to balance it out
@@ -396,7 +414,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
         // place and transform the bar in the scene
         TransformableNode barNode = new TransformableNode(arFragment.getTransformationSystem());
         barNode.setParent(anchorNode);
-        barNode.setRenderable(barRenderable);
+        barNode.setRenderable(barGripSectionRenderable);
         barNode.select();
 
         //  place and transform the plates in the scene relative to the bar

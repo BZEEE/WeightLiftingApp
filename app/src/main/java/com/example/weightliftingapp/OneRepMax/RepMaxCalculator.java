@@ -7,6 +7,9 @@ import java.util.ArrayList;
 public class RepMaxCalculator implements IOneRepMax {
     private double standardBarWeight;
     private double powerliftingBarWeight;
+    // 25 kilograms total, 20 for the bar, and 2.5 for each collar that holds the plates
+    private double barbellWeight = 25;
+
     private static double[] standardPlates = {
             StandardPlatesValues.fourtyFivePounds,
             StandardPlatesValues.thirtyFivePounds,
@@ -45,6 +48,11 @@ public class RepMaxCalculator implements IOneRepMax {
         // use greedy algorithm to determine plates from a list, similar to coin change selection from CMPUT 204
         ArrayList plates = new ArrayList();
         double[] format = plateFormat ? standardPlates : powerliftingPlates;
+
+        // subtract the weight of the bar from the totala lift weight
+        // to just get the remaining weight of the plates in total
+        oneRepMax = oneRepMax - barbellWeight;
+
         int i = 0;
         while (i < format.length) {
             if (format[i] * 2 < oneRepMax) {

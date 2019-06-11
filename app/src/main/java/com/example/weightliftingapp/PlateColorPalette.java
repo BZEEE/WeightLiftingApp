@@ -10,5 +10,5 @@ public class PlateColorPalette {
     public static final Color Gray = new Color(android.graphics.Color.GRAY);
     public static final Color Black = new Color(android.graphics.Color.BLACK);
     public static final Color White = new Color(android.graphics.Color.WHITE);
-    public static final Color SomeColor = new Color(android.graphics.Color.rgb(67, 137, 198));
+    public static final Color Silver = new Color(android.graphics.Color.rgb(192, 192, 192));
 }
