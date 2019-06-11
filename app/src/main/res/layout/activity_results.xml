@@ -14,27 +14,68 @@
         android:layout_width="wrap_content"
         android:textSize="40sp"
         android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_above="@+id/results_value"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/results_value"
         android:layout_width="wrap_content"
         android:textSize="40sp"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
         android:textColor="@color/limeGreen"
-        android:layout_below="@id/results_title"
+        android:layout_above="@id/StandardVersusPowerliftingSwitchLayout"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/StandardVersusPowerliftingSwitchLayout"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/StandardPlatesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/StandardVersusPowerliftingSwitch"
+            android:text="@string/action_standard_plates"
+            android:gravity="right"
+
+            android:textColor="@color/white"/>
+
+        <Switch
+            android:id="@+id/StandardVersusPowerliftingSwitch"
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="25dp"
+            android:showText="false"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/PowerliftingPlatesTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/StandardVersusPowerliftingSwitch"
+            android:text="@string/action_powerlifting_plates"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/goToARWeightsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:text="@string/see_weights_in_AR"
-        android:layout_below="@id/results_value"
+        android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
         android:textSize="24sp"
         android:background="@drawable/rounded_corners_blue_background"/>
 

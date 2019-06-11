@@ -36,6 +36,8 @@
 
     <!--Results Activity-->
     <string name="see_weights_in_AR">See Weights In AR</string>
+    <string name="action_standard_plates">standard plates</string>
+    <string name="action_powerlifting_plates">powerlifting plates</string>
 
     <!--Calculator Selection Activity-->
     <string name="calculator_selection_activity_title">Select Calculator</string>

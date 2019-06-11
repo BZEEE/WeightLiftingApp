@@ -5,11 +5,32 @@ import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
 import java.util.ArrayList;
 
 public class RepMaxCalculator implements IOneRepMax {
-    private static double[] standardPlates = {45, 35, 25, 15, 10, 5, 2.5};
-    private static double[] PowerliftingPlates = {55.1155, 44.0924, 33.0693, 22.0462, 11.0231, 5.51155, 2.755775, 1.10231};
+    private double standardBarWeight;
+    private double powerliftingBarWeight;
+    private static double[] standardPlates = {
+            StandardPlatesValues.fourtyFivePounds,
+            StandardPlatesValues.thirtyFivePounds,
+            StandardPlatesValues.twentyFivePounds,
+            StandardPlatesValues.fifteenPounds,
+            StandardPlatesValues.tenPounds,
+            StandardPlatesValues.fivePounds,
+            StandardPlatesValues.twoPointFivePounds
+    };
+    private static double[] powerliftingPlates = {
+            PowerliftingPlatesValues.twentyFiveKilograms,
+            PowerliftingPlatesValues.twentyKilograms,
+            PowerliftingPlatesValues.fifteenKilograms,
+            PowerliftingPlatesValues.tenKilograms,
+            PowerliftingPlatesValues.fiveKilograms,
+            PowerliftingPlatesValues.twoPointFiveKilograms,
+            PowerliftingPlatesValues.twoKilograms,
+            PowerliftingPlatesValues.onePointFiveKilograms,
+            PowerliftingPlatesValues.oneKilograms,
+            PowerliftingPlatesValues.zeroPointFiveKilograms
+    };
 
 
-    public static ArrayList PlatesFromWeight(float weight, boolean plateFormat) {
+    public ArrayList GetPlatesFromOneRepMax(double oneRepMax, boolean plateFormat) {
 //        Procedure PlatesFromWeight(weight):
 //            // returned is a set of the weights on one side of the bar from largest to smallest
 //            // Ex. {45, 25, 10} is returned
@@ -23,12 +44,12 @@ public class RepMaxCalculator implements IOneRepMax {
 
         // use greedy algorithm to determine plates from a list, similar to coin change selection from CMPUT 204
         ArrayList plates = new ArrayList();
-        double[] format = plateFormat ? standardPlates : PowerliftingPlates;
+        double[] format = plateFormat ? standardPlates : powerliftingPlates;
         int i = 0;
         while (i < format.length) {
-            if (format[i] * 2 < weight) {
+            if (format[i] * 2 < oneRepMax) {
                 plates.add(format[i]);
-                weight -= format[i] * 2;
+                oneRepMax -= format[i] * 2;
             } else {
                 i++;
             }
