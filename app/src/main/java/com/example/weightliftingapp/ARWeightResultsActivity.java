@@ -45,7 +45,16 @@ public class ARWeightResultsActivity extends AppCompatActivity {
     private ModelRenderable barGripSectionRenderable;
     private ModelRenderable barLeftSectionRenderable;
     private ModelRenderable barRightSectionRenderable;
+
+    // renderable are the basic primitives and attributes that specify that object, so basically the features
     private ModelRenderable[] plateRenderables;
+    private ModelRenderable[] barRenderables;
+
+    // objects that are placed in the scene have to be attached to nodes
+    private TransformableNode[] barNodes;
+    private TransformableNode[] plateNodes;
+
+    // temporary container
     private ArrayList tempContainer;
 
     @Override
@@ -76,34 +85,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                 // add bar and plates primitives to the scene
                 // place the models in the scene according to an anchor point
                 // that the user created via a touch gesture on the AR screen
+                // render themin the scene
                 CreateBarAndPlatesModel(anchorNode);
             }
         });
-
-//
-//
-//        ModelRenderable.builder()
-//            .setSource(this, R.raw.andy)
-//            .build()
-//            .thenAccept(renderable -> andyRenderable = renderable)
-//            .exceptionally(
-//                throwable -> {
-//                    Log.e(TAG, "Unable to load Renderable.", throwable);
-//                    return null;
-//                });
-
-        // andy renderable is directlyattached to root scene node
-//        Node node = new Node();
-//        node.setParent(arFragment.getArSceneView().getScene());
-//        node.setRenderable(andyRenderable);
-
-
-//        https://developers.google.com/ar/develop/java/sceneform/create-renderables
-//        create shapes at runtime using ShapeFactory or MaterialFactory
-
-//        whether to use ArFragment vs SceneView
-
-
     }
 
     @Override
@@ -155,23 +140,28 @@ public class ARWeightResultsActivity extends AppCompatActivity {
     }
 
     private void SetupBarModel() {
-    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
-        .thenAccept(
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+            .thenAccept(
+                    material -> {
+                        barLeftSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, -0.8775f, 0.25f), material);
+                    });
+
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+            .thenAccept(
                 material -> {
-                    barLeftSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, -0.8775f, 0.25f), material);
+                    barRightSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, 0.8775f, 0.25f), material);
                 });
 
-    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
-        .thenAccept(
-            material -> {
-                barRightSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, 0.8775f, 0.25f), material);
-            });
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+            .thenAccept(
+                material -> {
+                    barGripSectionRenderable = ShapeFactory.makeCylinder(0.014f, 1.31f,  new Vector3(0.0f, 0.0f, 0.25f), material);
+                });
 
-    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
-        .thenAccept(
-            material -> {
-                barGripSectionRenderable = ShapeFactory.makeCylinder(0.014f, 1.31f,  new Vector3(0.0f, 0.0f, 0.25f), material);
-            });
+        barRenderables = new ModelRenderable[3];
+        barRenderables[0] = barLeftSectionRenderable;
+        barRenderables[1] = barGripSectionRenderable;
+        barRenderables[2] = barRightSectionRenderable;
     }
 
     private void SetupPlateModels(ArrayList plateValues, boolean plateFormat) {
@@ -405,19 +395,54 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
         plateRenderables = new ModelRenderable[plateCount * 2];
         for (int i = 0; i < plateCount / 2; i++) {
-            plateRenderables[plateCount] = (ModelRenderable) tempContainer.get(i);
+            plateRenderables[plateCount - i] = (ModelRenderable) tempContainer.get(i);
             plateRenderables[plateCount + 1 + i] = (ModelRenderable) tempContainer.get(i);
         }
     }
 
     private void CreateBarAndPlatesModel(AnchorNode anchorNode) {
-        // place and transform the bar in the scene
-        TransformableNode barNode = new TransformableNode(arFragment.getTransformationSystem());
-        barNode.setParent(anchorNode);
-        barNode.setRenderable(barGripSectionRenderable);
-        barNode.select();
+        // to place renderable in the scene we attach them to a node
+        // which is responsible for their transformations within the 3D space
 
-        //  place and transform the plates in the scene relative to the bar
+        barNodes = new TransformableNode[barRenderables.length];
+        for (int i = 0; i < barRenderables.length; i++) {
+            // place the bar renderable in the scene
+            TransformableNode barNode = new TransformableNode(arFragment.getTransformationSystem());
+            barNode.setParent(anchorNode);
+            barNode.setRenderable(barRenderables[i]);
+            barNode.select();
+            // keep track of plateNode
+            barNodes[i] = barNode;
+        }
+
+        barNodes[0].setWorldPosition(new Vector3(-0.8775f, 0.225f, 0f));
+        barNodes[1].setWorldPosition(new Vector3(0f, 0f, 0f));
+        barNodes[2].setWorldPosition(new Vector3(0.8775f, 0.225f, 0f));
+
+        // number of total plates
+        plateNodes = new TransformableNode[plateRenderables.length];
+        for (int i = 0; i < plateRenderables.length; i++) {
+            TransformableNode plateNode = new TransformableNode(arFragment.getTransformationSystem());
+            plateNode.setParent(anchorNode);
+            plateNode.setRenderable(plateRenderables[i]);
+            plateNode.select();
+
+            int halfwayPoint = plateNodes.length / 2;
+            // set world position of node
+            float offsetFromCenterOfBar;
+            if (i < halfwayPoint) {
+                // half of the grip bar is 0.655f
+                offsetFromCenterOfBar = 0.655f - (((plateNodes.length / 2) - i - 0.5f) * plateHeight);
+                plateNode.setWorldPosition(new Vector3( offsetFromCenterOfBar, 0.225f, 0f));
+            } else {
+                offsetFromCenterOfBar = 0.655f + ((i - (plateNodes.length / 2) + 0.5f) * plateHeight);
+                plateNode.setWorldPosition(new Vector3( offsetFromCenterOfBar, 0.225f, 0f));
+            }
+
+            // keep track of plateNode
+            plateNodes[i] = plateNode;
+        }
+
 
     }
 }

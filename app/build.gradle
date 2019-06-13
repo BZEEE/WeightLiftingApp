@@ -70,10 +70,10 @@ dependencies {
 
     // Alternatively, use ArSceneView without the UX dependency.
     implementation 'com.google.ar.sceneform:core:1.9.0'
-
-    // enable sceneform to load 3D models at runtime
-    // has to be glTF or glb model files though
-    implementation 'com.google.ar.sceneform:assets:1.9.0'
+//
+//    // enable sceneform to load 3D models at runtime
+//    // has to be glTF or glb model files though
+//    implementation 'com.google.ar.sceneform:assets:1.9.0'
 }
 
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
