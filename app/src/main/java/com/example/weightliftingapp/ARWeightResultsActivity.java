@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.weightliftingapp.OneRepMax.PowerliftingPlatesValues;
@@ -14,9 +13,11 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
+import com.google.ar.core.Pose;
 import com.google.ar.core.Session;
 import com.google.ar.core.exceptions.UnavailableUserDeclinedInstallationException;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.Material;
@@ -42,38 +43,81 @@ public class ARWeightResultsActivity extends AppCompatActivity {
     private float plateRadius = 0.225f; // in metres
     private float plateHeight = 0.03f;
 
+    private float bufferPlateHeight = 0.005f;
+
     private ModelRenderable barGripSectionRenderable;
     private ModelRenderable barLeftSectionRenderable;
     private ModelRenderable barRightSectionRenderable;
 
     // renderable are the basic primitives and attributes that specify that object, so basically the features
+    private ModelRenderable bufferPlateTemplate;
+    private ModelRenderable modelRenderableTemplate;
     private ModelRenderable[] plateRenderables;
-    private ModelRenderable[] barRenderables;
 
     // objects that are placed in the scene have to be attached to nodes
     private TransformableNode[] barNodes;
     private TransformableNode[] plateNodes;
 
-    // temporary container
-    private ArrayList tempContainer;
+    private static final String TAG = "AR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Toast.makeText(this, "we running", Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_arweight_results);
+
+        // create template on a seperate thread and use it later on
+        // and make copies of it, which will then be added to the scene
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Black)
+                .thenAccept(
+                        material -> {
+                            ModelRenderable modelRenderableTemplate = ShapeFactory.makeCylinder(plateRadius, bufferPlateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                            MakeBufferPlateTemplateAvailable(modelRenderableTemplate);
+                        });
+
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red)
+                .thenAccept(
+                        material -> {
+                            ModelRenderable modelRenderableTemplate = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
+                            MakeModelRenderableTemplateAvailable(modelRenderableTemplate);
+
+                            Intent intent = getIntent();
+                            // get plate list from intent
+                            double[] plateValues = intent.getDoubleArrayExtra(platesResponseId);
+                            boolean plateFormat = intent.getBooleanExtra(plateFormatResponseId, false);
+
+                            // initialize plate models once the template has been created so we do not
+                            // run into concurrency issues
+                            SetupPlateModels(plateValues, plateFormat);
+                        });
+
+        // initialize the barbell on a seperate thread
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+                .thenAccept(
+                        material -> {
+                            ModelRenderable barLeft = ShapeFactory.makeCylinder(0.04f, 0.445f,  new Vector3(0f, 0f, 0f), material);
+                            SetupLeftSectionBarbell(barLeft);
+                        });
+
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+                .thenAccept(
+                        material -> {
+                            ModelRenderable barRight = ShapeFactory.makeCylinder(0.04f, 0.445f,  new Vector3(0f, 0f, 0f), material);
+                            SetupRightSectionBarbell(barRight);
+                        });
+
+        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
+                .thenAccept(
+                        material -> {
+                            ModelRenderable barGrip = ShapeFactory.makeCylinder(0.014f, 1.31f,  new Vector3(0f, 0f, 0f), material);
+                            SetupGripSectionBarbell(barGrip);
+                        });
 
         // get plates from One Rep max Activity, should be a list
         // that is a multiple of 2 for size [10,20,40,40,20,10]
-        Intent intent = getIntent();
-        // get plate list from intent
-        ArrayList plateValues = intent.getIntegerArrayListExtra(platesResponseId);
-        boolean plateFormat = intent.getBooleanExtra(plateFormatResponseId, false);
 
-        // initialize the models
-        SetupBarModel();
-        SetupPlateModels(plateValues, plateFormat);
 
-        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.weights_AR_fragment);
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.AR_Fragment);
 
         arFragment.setOnTapArPlaneListener(new BaseArFragment.OnTapArPlaneListener() {
             @Override
@@ -112,8 +156,15 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                     case INSTALL_REQUESTED:
                         // Ensures next invocation of requestInstall() will either return
                         // INSTALLED or throw an exception.
+                        Toast.makeText(this, "Homie", Toast.LENGTH_LONG)
+                                .show();
                         mUserRequestedInstall = false;
                         return;
+                    default:
+                        Toast.makeText(this, "Broooo", Toast.LENGTH_LONG)
+                                .show();
+                        break;
+
                 }
             }
         } catch (UnavailableUserDeclinedInstallationException e) {
@@ -139,159 +190,81 @@ public class ARWeightResultsActivity extends AppCompatActivity {
         }
     }
 
-    private void SetupBarModel() {
-        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
-            .thenAccept(
-                    material -> {
-                        barLeftSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, -0.8775f, 0.25f), material);
-                    });
+    private void MakeBufferPlateTemplateAvailable(ModelRenderable bufferTemplate) { bufferPlateTemplate = bufferTemplate; }
 
-        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
-            .thenAccept(
-                material -> {
-                    barRightSectionRenderable = ShapeFactory.makeCylinder(0.025f, 0.445f,  new Vector3(0.0f, 0.8775f, 0.25f), material);
-                });
+    private void MakeModelRenderableTemplateAvailable(ModelRenderable template) { modelRenderableTemplate = template; }
 
-        MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver)
-            .thenAccept(
-                material -> {
-                    barGripSectionRenderable = ShapeFactory.makeCylinder(0.014f, 1.31f,  new Vector3(0.0f, 0.0f, 0.25f), material);
-                });
-
-        barRenderables = new ModelRenderable[3];
-        barRenderables[0] = barLeftSectionRenderable;
-        barRenderables[1] = barGripSectionRenderable;
-        barRenderables[2] = barRightSectionRenderable;
+    private void SetupLeftSectionBarbell(ModelRenderable bar) {
+        barLeftSectionRenderable = bar;
     }
 
-    private void SetupPlateModels(ArrayList plateValues, boolean plateFormat) {
-        int plateCount = plateValues.size();
-        for (int i = 0; i < plateCount / 2; i++) {
+    private void SetupGripSectionBarbell(ModelRenderable bar) {
+        barGripSectionRenderable = bar;
+    }
+
+    private void SetupRightSectionBarbell(ModelRenderable bar) {
+        barRightSectionRenderable = bar;
+    }
+
+    private void SetupPlateModels(double[] plateValues, boolean plateFormat) {
+        plateRenderables = new ModelRenderable[plateValues.length];
+        for (int i = 0; i < plateValues.length; i++) {
             if (plateFormat) {
                 // user selected power lifting plates
                 // figure out which plate it was
                 // assign a color and size to these plates bases on real-world values
 
-                if ((double) plateValues.get(i) == PowerliftingPlatesValues.twentyFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                if (plateValues[i] == PowerliftingPlatesValues.twentyFiveKilograms) {
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.twentyKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Blue).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Red);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.fifteenKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Yellow).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.twentyKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Blue);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.tenKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.fifteenKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Yellow);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.fiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.White).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.tenKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Green);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.twoPointFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.fiveKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.White);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.twoKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Blue).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.twoPointFiveKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Red);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.onePointFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Yellow).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.twoKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Blue);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.oneKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.onePointFiveKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Yellow);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == PowerliftingPlatesValues.zeroPointFiveKilograms) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.White).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == PowerliftingPlatesValues.oneKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Green);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
+                } else if (plateValues[i] == PowerliftingPlatesValues.zeroPointFiveKilograms) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.White);
+                    plateRenderables[i] = plateRenderable;
+
                 } else {
                     // plate value does not match any one of the power lifting plate values
                     // throw error
@@ -301,109 +274,60 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                 // user selected standard commercial plates
                 // figure out which plate it was
                 // assign a color and size to these plates bases on real-world values
+                if (plateValues[i] == StandardPlatesValues.fourtyFivePounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Red);
+                    plateRenderables[i] = plateRenderable;
 
-                if ((double) plateValues.get(i) == StandardPlatesValues.fourtyFivePounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Red).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == StandardPlatesValues.thirtyFivePounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Blue);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
+                } else if (plateValues[i] == StandardPlatesValues.twentyFivePounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Silver);
+                    plateRenderables[i] = plateRenderable;
 
-                } else if ((double) plateValues.get(i) == StandardPlatesValues.thirtyFivePounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Blue).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == StandardPlatesValues.fifteenPounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Yellow);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == StandardPlatesValues.twentyFivePounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Silver).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == StandardPlatesValues.tenPounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Green);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == StandardPlatesValues.fifteenPounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Yellow).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == StandardPlatesValues.fivePounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.Gray);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == StandardPlatesValues.tenPounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Green).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
+                } else if (plateValues[i] == StandardPlatesValues.twoPointFivePounds) {
+                    ModelRenderable plateRenderable = modelRenderableTemplate.makeCopy();
+                    plateRenderable.getMaterial().setFloat3(MaterialProperties.Color, PlateColorPalette.White);
+                    plateRenderables[i] = plateRenderable;
 
-                            });
-                } else if ((double) plateValues.get(i) == StandardPlatesValues.fivePounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.Gray).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
-
-                            });
-                } else if ((double) plateValues.get(i) == StandardPlatesValues.twoPointFivePounds) {
-                    MaterialFactory.makeOpaqueWithColor(this, PlateColorPalette.White).thenAccept(
-                            material -> {
-                                // change color of model renderable based on plate weight
-                                ModelRenderable plateRenderable = ShapeFactory.makeCylinder(plateRadius, plateHeight,  new Vector3(0.0f, 0.0f, 0.0f), material);
-                                // adjust global position of plate relative to the bar
-                                // when we add a plate to one end of the bar
-                                // we also have to add it to the other end to balance it out
-                                // add model renderable to the renderables array
-                                tempContainer.add(plateRenderable);
-                            });
                 } else {
                     // plate value does not match any one of the standard plate values
                     // throw error
                 }
             }
+
         }
 
-        plateRenderables = new ModelRenderable[plateCount * 2];
-        for (int i = 0; i < plateCount / 2; i++) {
-            plateRenderables[plateCount - i] = (ModelRenderable) tempContainer.get(i);
-            plateRenderables[plateCount + 1 + i] = (ModelRenderable) tempContainer.get(i);
-        }
     }
 
     private void CreateBarAndPlatesModel(AnchorNode anchorNode) {
         // to place renderable in the scene we attach them to a node
         // which is responsible for their transformations within the 3D space
 
+        // Pose anchorPose = anchorNode.getAnchor().getPose();
+
+        ModelRenderable[] barRenderables = {barLeftSectionRenderable, barGripSectionRenderable, barRightSectionRenderable};
+
+        Log.d(TAG, "CreateBarAndPlateModelsWorks() works");
         barNodes = new TransformableNode[barRenderables.length];
         for (int i = 0; i < barRenderables.length; i++) {
             // place the bar renderable in the scene
@@ -415,28 +339,49 @@ public class ARWeightResultsActivity extends AppCompatActivity {
             barNodes[i] = barNode;
         }
 
-        barNodes[0].setWorldPosition(new Vector3(-0.8775f, 0.225f, 0f));
-        barNodes[1].setWorldPosition(new Vector3(0f, 0f, 0f));
-        barNodes[2].setWorldPosition(new Vector3(0.8775f, 0.225f, 0f));
+        barNodes[0].setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+        barNodes[0].setLocalPosition(new Vector3(-0.8775f, plateRadius, 0f));
+        barNodes[1].setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+        barNodes[1].setLocalPosition(new Vector3(0f, plateRadius, 0f));
+        barNodes[2].setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+        barNodes[2].setLocalPosition(new Vector3(0.8775f, plateRadius, 0f));
 
         // number of total plates
         plateNodes = new TransformableNode[plateRenderables.length];
+        float currentPosLeft = 0;
+        float currentPosRight = 0;
         for (int i = 0; i < plateRenderables.length; i++) {
             TransformableNode plateNode = new TransformableNode(arFragment.getTransformationSystem());
             plateNode.setParent(anchorNode);
             plateNode.setRenderable(plateRenderables[i]);
             plateNode.select();
 
+//            if (i != 0 && i != plateRenderables.length - 1) {
+//                TransformableNode bufferPlateNode = new TransformableNode(arFragment.getTransformationSystem());
+//                bufferPlateNode.setParent(anchorNode);
+//                ModelRenderable bufferPlateRenderable = bufferPlateTemplate.makeCopy();
+//                bufferPlateNode.setRenderable(bufferPlateRenderable);
+//                bufferPlateNode.select();
+//            }
+
+
             int halfwayPoint = plateNodes.length / 2;
             // set world position of node
+            // make sure to apply rotation and scaling before any translation operations
             float offsetFromCenterOfBar;
             if (i < halfwayPoint) {
                 // half of the grip bar is 0.655f
-                offsetFromCenterOfBar = 0.655f - (((plateNodes.length / 2) - i - 0.5f) * plateHeight);
-                plateNode.setWorldPosition(new Vector3( offsetFromCenterOfBar, 0.225f, 0f));
+                offsetFromCenterOfBar = (0.01f + 0.655f + (((plateNodes.length / 2) - i - 0.5f) * plateHeight)) * -1;
+                plateNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+                plateNode.setLocalPosition(new Vector3( offsetFromCenterOfBar, plateRadius, 0f));
+
+//                // set buffer plate
+//                plateNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+//                plateNode.setLocalPosition(new Vector3( offsetFromCenterOfBar, plateRadius, 0f));
             } else {
-                offsetFromCenterOfBar = 0.655f + ((i - (plateNodes.length / 2) + 0.5f) * plateHeight);
-                plateNode.setWorldPosition(new Vector3( offsetFromCenterOfBar, 0.225f, 0f));
+                offsetFromCenterOfBar = 0.01f + 0.655f + ((i - (plateNodes.length / 2) + 0.5f) * plateHeight);
+                plateNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+                plateNode.setLocalPosition(new Vector3( offsetFromCenterOfBar, plateRadius, 0f));
             }
 
             // keep track of plateNode

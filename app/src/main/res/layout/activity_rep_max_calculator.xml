@@ -18,7 +18,7 @@
         android:textSize="48sp"
         android:textColor="@color/white"
         android:textStyle="bold|italic"
-        android:text="@string/wilks_activity_title"
+        android:text="@string/one_rep_max_activity_title"
         android:layout_above="@id/LiftInputBox"
         />
     <EditText

@@ -1,14 +1,21 @@
 package com.example.weightliftingapp.OneRepMax;
+import android.util.Log;
+
 import com.example.weightliftingapp.OneRepMax.IOneRepMax;
 import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 public class RepMaxCalculator implements IOneRepMax {
     private double standardBarWeight;
     private double powerliftingBarWeight;
     // 25 kilograms total, 20 for the bar, and 2.5 for each collar that holds the plates
-    private double barbellWeight = 25;
+    private double barbellWeight = 20.0;
+    // the collar is what holds the weights on each end of the bar
+    // so there is two of them
+    private double collarWeight = 2.5;
 
     private static double[] standardPlates = {
             StandardPlatesValues.fourtyFivePounds,
@@ -33,7 +40,7 @@ public class RepMaxCalculator implements IOneRepMax {
     };
 
 
-    public ArrayList GetPlatesFromOneRepMax(double oneRepMax, boolean plateFormat) {
+    public double[] GetPlatesFromOneRepMax(double oneRepMax, boolean plateFormat) {
 //        Procedure PlatesFromWeight(weight):
 //            // returned is a set of the weights on one side of the bar from largest to smallest
 //            // Ex. {45, 25, 10} is returned
@@ -46,18 +53,43 @@ public class RepMaxCalculator implements IOneRepMax {
 //            return A
 
         // use greedy algorithm to determine plates from a list, similar to coin change selection from CMPUT 204
-        ArrayList plates = new ArrayList();
         double[] format = plateFormat ? standardPlates : powerliftingPlates;
 
         // subtract the weight of the bar from the totala lift weight
         // to just get the remaining weight of the plates in total
-        oneRepMax = oneRepMax - barbellWeight;
+        double tempOneRepMax;
+        tempOneRepMax = oneRepMax - barbellWeight - (collarWeight * 2);
 
-        int i = 0;
+        int i;
+        i = 0;
+        int elementCount = 0;
+        // first loop checks how many plates there will be, so we
+        // know how many elements to initialize the array with
         while (i < format.length) {
-            if (format[i] * 2 < oneRepMax) {
-                plates.add(format[i]);
-                oneRepMax -= format[i] * 2;
+            if (format[i] * 2 <= tempOneRepMax) {
+                tempOneRepMax -= format[i] * 2;
+                elementCount += 2;
+            } else {
+                i++;
+            }
+        }
+
+        i = 0;
+        int plateOffset = 0;
+        tempOneRepMax = oneRepMax - barbellWeight - (collarWeight * 2);
+        double[] plates = new double[elementCount];
+        int mid = plates.length / 2;
+        // second loop, we fill the array with the plate values
+        while (i < format.length) {
+            if (format[i] * 2 <= tempOneRepMax) {
+                tempOneRepMax -= format[i] * 2;
+                plates[mid - 1 - plateOffset] = format[i];
+                plates[mid + plateOffset] = format[i];
+                // each time we add a plate to increment by 1
+                // so we add the biggest plates in the middle of the array
+                // and the smaller plates towards the outside
+                // then the bar would look like this:  (10|25|45 --- 45|25|10)
+                plateOffset += 1;
             } else {
                 i++;
             }

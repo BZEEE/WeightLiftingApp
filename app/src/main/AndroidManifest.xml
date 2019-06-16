@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ARWeightResultsActivity"></activity>
+        <activity android:name=".ARBarbellActivity"></activity>
+        <activity android:name=".ARWeightResultsActivity" />
         <activity
             android:name=".ui.login.wLoginActivity"
             android:label="@string/title_activity_w_login" />
@@ -40,12 +41,6 @@
         <meta-data
             android:name="com.google.ar.core"
             android:value="optional" />
-        <!--cloud anchors, need API Key from google cloud platform console-->
-        <!--https://developers.google.com/ar/develop/java/cloud-anchors/quickstart-android-->
-        <!--<meta-data-->
-            <!--android:name="com.google.android.ar.API_KEY"-->
-            <!--android:value="<YOUR_API_KEY>"/>-->
-
     </application>
 
 </manifest>

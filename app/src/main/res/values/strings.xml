@@ -16,6 +16,7 @@
     <string name="password">Enter Password</string>
     <string name="login_button_text">Login</string>
     <string name="login_title">Power Buddy</string>
+    <string name="username_already_exists_tag">username already exists, choose a different one</string>
 
 
     <!--One Rep Max Activity Page-->

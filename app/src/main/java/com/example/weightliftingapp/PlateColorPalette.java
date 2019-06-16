@@ -1,6 +1,7 @@
 package com.example.weightliftingapp;
 
 import com.google.ar.sceneform.rendering.Color;
+import com.google.ar.sceneform.rendering.Material;
 
 public class PlateColorPalette {
     public static final Color Red = new Color(android.graphics.Color.RED);

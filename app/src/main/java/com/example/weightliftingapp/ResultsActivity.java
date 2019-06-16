@@ -1,14 +1,21 @@
 package com.example.weightliftingapp;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.weightliftingapp.IPF.IPFCalculator;
 import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
@@ -18,6 +25,8 @@ import com.example.weightliftingapp.Wilks.WilksCalculatorActivity;
 import com.google.ar.core.ArCoreApk;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Locale;
 
 import static com.example.weightliftingapp.IPF.IPFCalculatorActivity.bodyWeightResponseIPFAppId;
@@ -39,11 +48,14 @@ public class ResultsActivity extends AppCompatActivity {
     public static final String plateFormatResponseId = "com.example.weightliftingapp.ARPlatesFormat";
     public static final String platesResponseId = "com.example.weightliftingapp.ARPlates";
 
+    private double MIN_OPENGL_VERSION = 3.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
+
 
         Intent intent = getIntent();
         // this flag is referenced from RepMaxCalculatorActivity.java
@@ -78,7 +90,7 @@ public class ResultsActivity extends AppCompatActivity {
                 this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.2f", oneRepMaxValue));
 
                 // check if device enables ArCore
-                ArrayList plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
+                double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
                 DeviceEnablesArCore(plates);
 
                 break;
@@ -86,6 +98,8 @@ public class ResultsActivity extends AppCompatActivity {
             case wilksCalculatorId:
                 // disable AR since it is not needed for Wilks
                 DisableARButton();
+                DisablePlatesSwitchLayout();
+
                 double bodyWeightWilksResponse = intent.getDoubleExtra(bodyWeightResponseWilksAppId, 0);
                 String genderWilksResponse = intent.getStringExtra(genderResponseWilksAppId);
                 // run calculator using WilksCalculator
@@ -101,6 +115,7 @@ public class ResultsActivity extends AppCompatActivity {
             case ipfPointCalculatorId:
                 // disable AR since it is not needed for IPF
                 DisableARButton();
+                DisablePlatesSwitchLayout();
 
                 double totalIPFResponse = intent.getDoubleExtra(totalResponseIPFAppId, 0);
                 double bodyWeightIPFResponse = intent.getDoubleExtra(bodyWeightResponseIPFAppId, 0);
@@ -120,9 +135,8 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
-    private void DeviceEnablesArCore(ArrayList plates) {
+    private void DeviceEnablesArCore(double[] plates) {
         ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
-
         if (availability.isTransient()) {
             // Re-query at 5Hz while compatibility is checked in the background.
             new Handler().postDelayed(new Runnable() {
@@ -134,7 +148,8 @@ public class ResultsActivity extends AppCompatActivity {
                 }
             }, 200);
         }
-        if (availability.isSupported()) {
+
+        if (availability.isSupported() && CheckIsSupportedDeviceOrFinish(this)) {
             // AR is supported
             EnablePlatesSwitchLayout();
             EnableARButton(plates);
@@ -145,7 +160,22 @@ public class ResultsActivity extends AppCompatActivity {
         }
     }
 
-    private void EnableARButton(ArrayList plates) {
+    public boolean CheckIsSupportedDeviceOrFinish(final Activity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            Toast.makeText(activity, "Sceneform requires Android N or later", Toast.LENGTH_LONG).show();
+            activity.finish();
+            return false;
+        }
+        String openGlVersionString = ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE)).getDeviceConfigurationInfo().getGlEsVersion();
+        if (Double.parseDouble(openGlVersionString) < MIN_OPENGL_VERSION) {
+            Toast.makeText(activity, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG).show();
+            activity.finish();
+            return false;
+        }
+        return true;
+    }
+
+    private void EnableARButton(double[] plates) {
         augmentedRealityButton.setVisibility(View.VISIBLE);
         augmentedRealityButton.setEnabled(true);
         // set on click listener since the button is visible
@@ -172,10 +202,10 @@ public class ResultsActivity extends AppCompatActivity {
         standardVersusPowerliftingSwitchLayout.setEnabled(false);
     }
 
-    private void GoToWeightsARView(ArrayList plates) {
+    private void GoToWeightsARView(double[] plates) {
         Intent intent = new Intent(this, ARWeightResultsActivity.class);
 
-        intent.putIntegerArrayListExtra(platesResponseId, plates);
+        intent.putExtra(platesResponseId, plates);
         if (standardVersusPowerliftingSwitch.isChecked()) {
             // user wants power lifting plates
             intent.putExtra(plateFormatResponseId, true);

@@ -5,7 +5,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.lifecycle.*;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -93,7 +95,7 @@ public class wLoginActivity extends AppCompatActivity {
                         if (FirebaseDatabaseManager.UsernameExistsInDatabase(email)) {
                             // if the email exists in the database, inform user, has to be a unique email/username
                             // display error message
-                            loginErrorTextView.setText("username already exists, choose a different one");
+                            loginErrorTextView.setText(R.string.username_already_exists_tag);
 
                         } else {
                             // else it is a new user that we have to authenticate
@@ -166,13 +168,13 @@ public class wLoginActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // user wants to login
-                    RegisterTextView.setTextColor(getResources().getColor(R.color.fadedGrey));
-                    LoginTextView.setTextColor(getResources().getColor(R.color.TealBlue));
+                    RegisterTextView.setTextColor(getResources().getColor(R.color.fadedGrey, getBaseContext().getTheme()));
+                    LoginTextView.setTextColor(getResources().getColor(R.color.TealBlue, getBaseContext().getTheme()));
                     loginButton.setText(R.string.action_login);
                 } else {
                     // user wants to register
-                    RegisterTextView.setTextColor(getResources().getColor(R.color.TealBlue));
-                    LoginTextView.setTextColor(getResources().getColor(R.color.fadedGrey));
+                    RegisterTextView.setTextColor(getResources().getColor(R.color.TealBlue, getBaseContext().getTheme()));
+                    LoginTextView.setTextColor(getResources().getColor(R.color.fadedGrey, getBaseContext().getTheme()));
                     loginButton.setText(R.string.action_register);
                 }
             }
