@@ -16,7 +16,14 @@
         <activity
             android:name=".ui.login.wLoginActivity"
             android:label="@string/title_activity_w_login" />
-        <activity android:name=".Wilks.WilksCalculatorActivity" />
+        <activity android:name=".Wilks.WilksCalculatorActivity">
+            <!--Action View intent filters allow content on our app to -->
+            <!--be searchableand index by googl'e search engine-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".AchievementsActivity" />
         <activity android:name=".IPF.IPFCalculatorActivity" />
         <activity
@@ -26,12 +33,17 @@
         <activity android:name=".CalculatorSelectionActivity" />
         <activity android:name=".OneRepMax.RepMaxCalculatorActivity" />
         <activity android:name=".ResultsActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoadingScreenSplashActivity"
+            android:theme="@style/LoadingSplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".MainActivity">
         </activity>
         <!--
  Indicates that app supports, but does not require ARCore ("AR Optional").

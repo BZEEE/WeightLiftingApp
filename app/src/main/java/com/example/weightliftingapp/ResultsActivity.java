@@ -90,8 +90,7 @@ public class ResultsActivity extends AppCompatActivity {
                 this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.2f", oneRepMaxValue));
 
                 // check if device enables ArCore
-                double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
-                DeviceEnablesArCore(plates);
+                DeviceEnablesArCore(repMaxCalculator, oneRepMaxValue);
 
                 break;
 
@@ -135,7 +134,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
-    private void DeviceEnablesArCore(double[] plates) {
+    private void DeviceEnablesArCore(RepMaxCalculator repMaxCalculator, double oneRepMaxValue) {
         ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
         if (availability.isTransient()) {
             // Re-query at 5Hz while compatibility is checked in the background.
@@ -144,7 +143,7 @@ public class ResultsActivity extends AppCompatActivity {
                 public void run() {
                     // recursive call to re-check if the devices support AR capabilities
                     // delay for 200 milliseconds, then re-query the check
-                    DeviceEnablesArCore(plates);
+                    DeviceEnablesArCore(repMaxCalculator, oneRepMaxValue);
                 }
             }, 200);
         }
@@ -152,7 +151,7 @@ public class ResultsActivity extends AppCompatActivity {
         if (availability.isSupported() && CheckIsSupportedDeviceOrFinish(this)) {
             // AR is supported
             EnablePlatesSwitchLayout();
-            EnableARButton(plates);
+            EnableARButton(repMaxCalculator, oneRepMaxValue);
         } else {
             // Unsupported or unknown.
             DisablePlatesSwitchLayout();
@@ -175,14 +174,14 @@ public class ResultsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void EnableARButton(double[] plates) {
+    private void EnableARButton(RepMaxCalculator repMaxCalculator, double oneRepMaxValue) {
         augmentedRealityButton.setVisibility(View.VISIBLE);
         augmentedRealityButton.setEnabled(true);
         // set on click listener since the button is visible
         augmentedRealityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GoToWeightsARView(plates);
+                GoToWeightsARView(repMaxCalculator, oneRepMaxValue);
             }
         });
     }
@@ -202,16 +201,19 @@ public class ResultsActivity extends AppCompatActivity {
         standardVersusPowerliftingSwitchLayout.setEnabled(false);
     }
 
-    private void GoToWeightsARView(double[] plates) {
+    private void GoToWeightsARView(RepMaxCalculator repMaxCalculator, double oneRepMaxValue) {
         Intent intent = new Intent(this, ARWeightResultsActivity.class);
 
-        intent.putExtra(platesResponseId, plates);
         if (standardVersusPowerliftingSwitch.isChecked()) {
             // user wants power lifting plates
             intent.putExtra(plateFormatResponseId, true);
+            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
+            intent.putExtra(platesResponseId, plates);
         } else {
             // user wants standard plates
             intent.putExtra(plateFormatResponseId, false);
+            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
+            intent.putExtra(platesResponseId, plates);
         }
         startActivity(intent);
     }

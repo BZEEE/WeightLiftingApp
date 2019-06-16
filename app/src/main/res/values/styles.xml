@@ -8,6 +8,10 @@
         <item name="colorAccent">@color/TealBlue</item>
     </style>
 
+    <style name="LoadingSplashTheme" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/loading_splash_screen</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

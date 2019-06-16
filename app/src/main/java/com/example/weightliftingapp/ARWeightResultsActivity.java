@@ -29,6 +29,7 @@ import com.google.ar.sceneform.ux.BaseArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static com.example.weightliftingapp.ResultsActivity.plateFormatResponseId;
 import static com.example.weightliftingapp.ResultsActivity.platesResponseId;
@@ -210,6 +211,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
         plateRenderables = new ModelRenderable[plateValues.length];
         for (int i = 0; i < plateValues.length; i++) {
             if (plateFormat) {
+                Log.d(TAG, "Run Again");
                 // user selected power lifting plates
                 // figure out which plate it was
                 // assign a color and size to these plates bases on real-world values
@@ -327,7 +329,6 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
         ModelRenderable[] barRenderables = {barLeftSectionRenderable, barGripSectionRenderable, barRightSectionRenderable};
 
-        Log.d(TAG, "CreateBarAndPlateModelsWorks() works");
         barNodes = new TransformableNode[barRenderables.length];
         for (int i = 0; i < barRenderables.length; i++) {
             // place the bar renderable in the scene
@@ -346,48 +347,75 @@ public class ARWeightResultsActivity extends AppCompatActivity {
         barNodes[2].setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
         barNodes[2].setLocalPosition(new Vector3(0.8775f, plateRadius, 0f));
 
+
         // number of total plates
         plateNodes = new TransformableNode[plateRenderables.length];
-        float currentPosLeft = 0;
-        float currentPosRight = 0;
-        for (int i = 0; i < plateRenderables.length; i++) {
-            TransformableNode plateNode = new TransformableNode(arFragment.getTransformationSystem());
-            plateNode.setParent(anchorNode);
-            plateNode.setRenderable(plateRenderables[i]);
-            plateNode.select();
+        float currentPosLeft = (0.01f + 0.655f) * -1;
+        float currentPosRight = 0.01f + 0.655f;
+        for (int i = 0; i < plateRenderables.length / 2; i++) {
+            int left = (plateRenderables.length / 2) - 1 - i;
+            int right = (plateRenderables.length / 2) + i;
 
-//            if (i != 0 && i != plateRenderables.length - 1) {
-//                TransformableNode bufferPlateNode = new TransformableNode(arFragment.getTransformationSystem());
-//                bufferPlateNode.setParent(anchorNode);
-//                ModelRenderable bufferPlateRenderable = bufferPlateTemplate.makeCopy();
-//                bufferPlateNode.setRenderable(bufferPlateRenderable);
-//                bufferPlateNode.select();
-//            }
-
-
-            int halfwayPoint = plateNodes.length / 2;
-            // set world position of node
-            // make sure to apply rotation and scaling before any translation operations
-            float offsetFromCenterOfBar;
-            if (i < halfwayPoint) {
-                // half of the grip bar is 0.655f
-                offsetFromCenterOfBar = (0.01f + 0.655f + (((plateNodes.length / 2) - i - 0.5f) * plateHeight)) * -1;
-                plateNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
-                plateNode.setLocalPosition(new Vector3( offsetFromCenterOfBar, plateRadius, 0f));
-
-//                // set buffer plate
-//                plateNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
-//                plateNode.setLocalPosition(new Vector3( offsetFromCenterOfBar, plateRadius, 0f));
+            TransformableNode plateNodeLeft = new TransformableNode(arFragment.getTransformationSystem());
+            plateNodeLeft.setParent(anchorNode);
+            plateNodeLeft.setRenderable(plateRenderables[left]);
+            plateNodeLeft.select();
+            plateNodes[left] = plateNodeLeft;
+            if (left == (plateRenderables.length / 2) - 1) {
+                currentPosLeft += (plateHeight / 2 * -1);
             } else {
-                offsetFromCenterOfBar = 0.01f + 0.655f + ((i - (plateNodes.length / 2) + 0.5f) * plateHeight);
-                plateNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
-                plateNode.setLocalPosition(new Vector3( offsetFromCenterOfBar, plateRadius, 0f));
+                currentPosLeft += ((plateHeight / 2) + (bufferPlateHeight / 2)) * -1;
             }
 
-            // keep track of plateNode
-            plateNodes[i] = plateNode;
+            plateNodeLeft.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+            plateNodeLeft.setLocalPosition(new Vector3( currentPosLeft, plateRadius, 0f));
+
+            // set buffer plate left
+            if (left != 0) {
+                TransformableNode bufferPlateNodeLeft = new TransformableNode(arFragment.getTransformationSystem());
+                bufferPlateNodeLeft.setParent(anchorNode);
+                ModelRenderable bufferPlateRenderable = bufferPlateTemplate.makeCopy();
+                bufferPlateNodeLeft.setRenderable(bufferPlateRenderable);
+                bufferPlateNodeLeft.select();
+
+                currentPosLeft += ((plateHeight / 2) + (bufferPlateHeight / 2)) * -1;
+
+                bufferPlateNodeLeft.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+                bufferPlateNodeLeft.setLocalPosition(new Vector3( currentPosLeft, plateRadius, 0f));
+            }
+
+
+
+
+            TransformableNode plateNodeRight = new TransformableNode(arFragment.getTransformationSystem());
+            plateNodeRight.setParent(anchorNode);
+            plateNodeRight.setRenderable(plateRenderables[left]);
+            plateNodeRight.select();
+            plateNodes[right] = plateNodeRight;
+
+            if (right == (plateRenderables.length / 2)) {
+                currentPosRight += (plateHeight / 2);
+            } else {
+                currentPosRight += ((plateHeight / 2) + (bufferPlateHeight / 2));
+            }
+
+            plateNodeRight.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+            plateNodeRight.setLocalPosition(new Vector3( currentPosRight, plateRadius, 0f));
+
+            // set buffer plate right
+            if (right != plateRenderables.length - 1) {
+                TransformableNode bufferPlateNodeRight = new TransformableNode(arFragment.getTransformationSystem());
+                bufferPlateNodeRight.setParent(anchorNode);
+                ModelRenderable bufferPlateRenderable = bufferPlateTemplate.makeCopy();
+                bufferPlateNodeRight.setRenderable(bufferPlateRenderable);
+                bufferPlateNodeRight.select();
+
+                currentPosRight += (plateHeight / 2) + (bufferPlateHeight / 2);
+
+                bufferPlateNodeRight.setLocalRotation(Quaternion.axisAngle(new Vector3(0, 0, 1), 90));
+                bufferPlateNodeRight.setLocalPosition(new Vector3( currentPosRight, plateRadius, 0f));
+
+            }
         }
-
-
     }
 }

@@ -1,6 +1,7 @@
 package com.example.weightliftingapp.OneRepMax;
 import android.util.Log;
 
+import com.example.weightliftingapp.MetricConverter;
 import com.example.weightliftingapp.OneRepMax.IOneRepMax;
 import com.example.weightliftingapp.OneRepMax.RepMaxAlgorithms;
 
@@ -12,10 +13,12 @@ public class RepMaxCalculator implements IOneRepMax {
     private double standardBarWeight;
     private double powerliftingBarWeight;
     // 25 kilograms total, 20 for the bar, and 2.5 for each collar that holds the plates
-    private double barbellWeight = 20.0;
+    private double standardBarbellWeight = 20.0;      // in pounds
+    private double powerliftingBarbellWeight = 45.0;  // in pounds
     // the collar is what holds the weights on each end of the bar
     // so there is two of them
     private double collarWeight = 2.5;
+    private static final String TAG = "AR";
 
     private static double[] standardPlates = {
             StandardPlatesValues.fourtyFivePounds,
@@ -53,12 +56,12 @@ public class RepMaxCalculator implements IOneRepMax {
 //            return A
 
         // use greedy algorithm to determine plates from a list, similar to coin change selection from CMPUT 204
-        double[] format = plateFormat ? standardPlates : powerliftingPlates;
+        double[] format = plateFormat ? powerliftingPlates : standardPlates;
 
         // subtract the weight of the bar from the totala lift weight
         // to just get the remaining weight of the plates in total
         double tempOneRepMax;
-        tempOneRepMax = oneRepMax - barbellWeight - (collarWeight * 2);
+        tempOneRepMax = plateFormat ? oneRepMax - powerliftingBarbellWeight - (collarWeight * 2) : oneRepMax - standardBarbellWeight - (collarWeight * 2);
 
         int i;
         i = 0;
@@ -66,8 +69,9 @@ public class RepMaxCalculator implements IOneRepMax {
         // first loop checks how many plates there will be, so we
         // know how many elements to initialize the array with
         while (i < format.length) {
-            if (format[i] * 2 <= tempOneRepMax) {
-                tempOneRepMax -= format[i] * 2;
+            double weightConversion = plateFormat ? MetricConverter.KilogramsToPounds(format[i]) : format[i];
+            if (weightConversion * 2 <= tempOneRepMax) {
+                tempOneRepMax -= weightConversion * 2;
                 elementCount += 2;
             } else {
                 i++;
@@ -76,13 +80,14 @@ public class RepMaxCalculator implements IOneRepMax {
 
         i = 0;
         int plateOffset = 0;
-        tempOneRepMax = oneRepMax - barbellWeight - (collarWeight * 2);
+        tempOneRepMax = plateFormat ? oneRepMax - powerliftingBarbellWeight - (collarWeight * 2) : oneRepMax - standardBarbellWeight - (collarWeight * 2);
         double[] plates = new double[elementCount];
         int mid = plates.length / 2;
         // second loop, we fill the array with the plate values
         while (i < format.length) {
-            if (format[i] * 2 <= tempOneRepMax) {
-                tempOneRepMax -= format[i] * 2;
+            double weightConversion = plateFormat ? MetricConverter.KilogramsToPounds(format[i]) : format[i];
+            if (weightConversion * 2 <= tempOneRepMax) {
+                tempOneRepMax -= weightConversion * 2;
                 plates[mid - 1 - plateOffset] = format[i];
                 plates[mid + plateOffset] = format[i];
                 // each time we add a plate to increment by 1
@@ -94,6 +99,7 @@ public class RepMaxCalculator implements IOneRepMax {
                 i++;
             }
         }
+        Log.d(TAG, Arrays.toString(plates));
         return plates;
     }
 
