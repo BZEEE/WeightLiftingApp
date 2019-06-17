@@ -41,6 +41,8 @@ public class ARWeightResultsActivity extends AppCompatActivity {
 
     private ArFragment arFragment;
 
+    private boolean barbellInScene = false;
+
     private float plateRadius = 0.225f; // in metres
     private float plateHeight = 0.03f;
 
@@ -131,7 +133,10 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                 // place the models in the scene according to an anchor point
                 // that the user created via a touch gesture on the AR screen
                 // render themin the scene
-                CreateBarAndPlatesModel(anchorNode);
+                if (!barbellInScene) {
+                    barbellInScene = true;
+                    CreateBarAndPlatesModel(anchorNode);
+                }
             }
         });
     }
@@ -335,7 +340,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
             TransformableNode barNode = new TransformableNode(arFragment.getTransformationSystem());
             barNode.setParent(anchorNode);
             barNode.setRenderable(barRenderables[i]);
-            barNode.select();
+            // barNode.select();
             // keep track of plateNode
             barNodes[i] = barNode;
         }
@@ -359,7 +364,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
             TransformableNode plateNodeLeft = new TransformableNode(arFragment.getTransformationSystem());
             plateNodeLeft.setParent(anchorNode);
             plateNodeLeft.setRenderable(plateRenderables[left]);
-            plateNodeLeft.select();
+            // plateNodeLeft.select();
             plateNodes[left] = plateNodeLeft;
             if (left == (plateRenderables.length / 2) - 1) {
                 currentPosLeft += (plateHeight / 2 * -1);
@@ -376,7 +381,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                 bufferPlateNodeLeft.setParent(anchorNode);
                 ModelRenderable bufferPlateRenderable = bufferPlateTemplate.makeCopy();
                 bufferPlateNodeLeft.setRenderable(bufferPlateRenderable);
-                bufferPlateNodeLeft.select();
+                // bufferPlateNodeLeft.select();
 
                 currentPosLeft += ((plateHeight / 2) + (bufferPlateHeight / 2)) * -1;
 
@@ -390,7 +395,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
             TransformableNode plateNodeRight = new TransformableNode(arFragment.getTransformationSystem());
             plateNodeRight.setParent(anchorNode);
             plateNodeRight.setRenderable(plateRenderables[left]);
-            plateNodeRight.select();
+            // plateNodeRight.select();
             plateNodes[right] = plateNodeRight;
 
             if (right == (plateRenderables.length / 2)) {
@@ -408,7 +413,7 @@ public class ARWeightResultsActivity extends AppCompatActivity {
                 bufferPlateNodeRight.setParent(anchorNode);
                 ModelRenderable bufferPlateRenderable = bufferPlateTemplate.makeCopy();
                 bufferPlateNodeRight.setRenderable(bufferPlateRenderable);
-                bufferPlateNodeRight.select();
+                // bufferPlateNodeRight.select();
 
                 currentPosRight += (plateHeight / 2) + (bufferPlateHeight / 2);
 
