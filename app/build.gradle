@@ -68,7 +68,15 @@ dependencies {
     // Provides ArFragment, and other UX resources.
     implementation "com.google.ar.sceneform.ux:sceneform-ux:1.8.0"
     // implementation "com.android.support:appcompat-v7:28.0.0"
+
+    // add MP android chart library to be able to draw charts and visualize data
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
+
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
 
 // apply plugin: 'com.google.ar.sceneform.plugin'
 apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

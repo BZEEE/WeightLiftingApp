@@ -24,11 +24,17 @@ import android.widget.ImageView;
 import com.example.weightliftingapp.IPF.IPFCalculatorActivity;
 import com.example.weightliftingapp.OneRepMax.RepMaxCalculatorActivity;
 import com.example.weightliftingapp.Wilks.WilksCalculatorActivity;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class UserProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +42,7 @@ public class UserProfileActivity extends AppCompatActivity
     private static final String TAG = "debugging";
     private String email;
     private String password;
+    private LineChart chart;
 
 
     @Override
@@ -52,6 +59,10 @@ public class UserProfileActivity extends AppCompatActivity
 //        Bitmap circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 100);
 //        ImageView circularImageView = (ImageView)findViewById(R.id.userProfileImageView);
 //        circularImageView.setImageBitmap(circularBitmap);
+
+        // create user profile chart if data exists
+        chart = findViewById(R.id.user_bench_squat_deadlift_progression_chart);
+
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -160,7 +171,44 @@ public class UserProfileActivity extends AppCompatActivity
                 });
     }
 
-    private void getUserProfile() {
-        // get user specific profile information
-    }
+//    private void getUserProfile() {
+//        // get user specific profile information
+//    }
+//
+//    private GraphData[] ReadChartDataFromFirebase() {
+//
+//    }
+//
+//    private void ReadWilksScoreFromFirebase() {
+//
+//    }
+//
+//    private void ReadIPFScoreFromFirebase() {
+//
+//    }
+//
+//    private void WriteNewChartEntryToFirebase() {
+//
+//    }
+//
+//    private void WriteNewWilksScoreToFirebase() {
+//
+//    }
+//
+//    private void WriteNewIPFScoreToFirebase() {
+//
+//    }
+//
+//    private void PopulateChartWithData(GraphData[] data) {
+//        // https://weeklycoding.com/mpandroidchart-documentation/getting-started/
+//        // read in data from cloud
+//        // populate UI with data
+//        List<Entry> entries = new ArrayList<>();
+//
+//        for (GraphData dataInstance : data) {
+//            entries.add(new Entry(data.getValueX))
+//        }
+//
+//
+//    }
 }
