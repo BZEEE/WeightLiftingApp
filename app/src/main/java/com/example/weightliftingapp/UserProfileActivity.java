@@ -1,6 +1,8 @@
 package com.example.weightliftingapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.ImageView;
 
 import com.example.weightliftingapp.IPF.IPFCalculatorActivity;
 import com.example.weightliftingapp.OneRepMax.RepMaxCalculatorActivity;
@@ -41,14 +44,15 @@ public class UserProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_user_profile);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
+//        // let user set profile image from phone gallery, then store it in firebase
+//        // make a circular image as the profile picture
+//        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(),R.drawable.userProfileImageResource);
+//        Bitmap circularBitmap = ImageConverter.getRoundedCornerBitmap(bitmap, 100);
+//        ImageView circularImageView = (ImageView)findViewById(R.id.userProfileImageView);
+//        circularImageView.setImageBitmap(circularBitmap);
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
