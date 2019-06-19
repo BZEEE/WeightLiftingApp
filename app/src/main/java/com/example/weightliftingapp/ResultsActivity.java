@@ -74,7 +74,7 @@ public class ResultsActivity extends AppCompatActivity {
 
 
         // determine which calculator activity started the results activity
-        switch (this.checkFlag)  {
+        switch (this.checkFlag) {
             case repMaxCalculatorId:
 
                 double liftResponse = intent.getDoubleExtra(liftResponseAppId, 0);
@@ -124,7 +124,7 @@ public class ResultsActivity extends AppCompatActivity {
                 double IPFpoints = ipfPointCalculator.Calculate(totalIPFResponse, bodyWeightIPFResponse, genderIPFResponse);
                 // set response value to the TextView of this activity
                 this.calculatorTitle.setText(ipfDisplayTitle);
-                this.calculatorResponse.setText(String.format(Locale.CANADA,"%1$.3f", IPFpoints));
+                this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.3f", IPFpoints));
                 break;
 
             default:
@@ -133,6 +133,13 @@ public class ResultsActivity extends AppCompatActivity {
         }
 
     }
+    public class CustomDrawableView extends View {
+        private ShapeDrawable drawable;
+        //define plate functions for corresponding arrays from the 1 rm calculator greedy plate algorithm
+        // powerlifting and standard
+    }
+
+    //use plate functions to output correct images after using the greedy algorithm
 
     private void DeviceEnablesArCore(RepMaxCalculator repMaxCalculator, double oneRepMaxValue) {
         ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
