@@ -133,13 +133,23 @@ public class ResultsActivity extends AppCompatActivity {
         }
 
     }
-    public class CustomDrawableView extends View {
-        private ShapeDrawable drawable;
-        //define plate functions for corresponding arrays from the 1 rm calculator greedy plate algorithm
-        // powerlifting and standard
-    }
 
     //use plate functions to output correct images after using the greedy algorithm
+    private void display2dGraphics(RepMaxCalculator repMaxCalculator, double oneRepMaxValue){
+        // call the ischecked function for powerlifting or standard plates
+        //        if (standardVersusPowerliftingSwitch.isChecked()) {
+        //            // user wants power lifting plates
+        //            intent.putExtra(plateFormatResponseId, true);
+        //            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
+        //            intent.putExtra(platesResponseId, plates);
+        //        } else {
+        //            // user wants standard plates
+        //            intent.putExtra(plateFormatResponseId, false);
+        //            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
+        //            intent.putExtra(platesResponseId, plates);
+        //        }
+        // add once acquiring the array, display corresponding images
+    }
 
     private void DeviceEnablesArCore(RepMaxCalculator repMaxCalculator, double oneRepMaxValue) {
         ArCoreApk.Availability availability = ArCoreApk.getInstance().checkAvailability(this);
