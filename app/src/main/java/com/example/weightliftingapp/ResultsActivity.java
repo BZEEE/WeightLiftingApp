@@ -139,14 +139,15 @@ public class ResultsActivity extends AppCompatActivity {
         // call the ischecked function for powerlifting or standard plates
         //        if (standardVersusPowerliftingSwitch.isChecked()) {
         //            // user wants power lifting plates
-        //            intent.putExtra(plateFormatResponseId, true);
-        //            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
-        //            intent.putExtra(platesResponseId, plates);
+                    // run user input for 1 rm and plate array
+        //          // for every array element, iterate from floor middle and display to the left accordingly from the knub (use powerlifting plate images
+        //          // repeat the same for the right. Start in and iterate outward`
         //        } else {
         //            // user wants standard plates
         //            intent.putExtra(plateFormatResponseId, false);
         //            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
         //            intent.putExtra(platesResponseId, plates);
+        //            do the same process but with the standard plates algorithm
         //        }
         // add once acquiring the array, display corresponding images
     }

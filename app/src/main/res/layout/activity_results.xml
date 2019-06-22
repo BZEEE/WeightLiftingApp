@@ -67,16 +67,24 @@
 
     </RelativeLayout>
 
+
     <Button
         android:id="@+id/goToARWeightsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/see_weights_in_AR"
         android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
-        android:textSize="24sp"
-        android:background="@drawable/rounded_corners_blue_background"/>
+        android:layout_centerVertical="true"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/rounded_corners_blue_background"
+        android:text="@string/see_weights_in_AR"
+        android:textSize="24sp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="288dp"
+        android:layout_above="@+id/results_value"
+        android:layout_marginBottom="-326dp"
+        app:srcCompat="@drawable/empty_barbell" />
 
 </RelativeLayout>
