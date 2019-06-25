@@ -135,14 +135,29 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     //use plate functions to output correct images after using the greedy algorithm
-    private void display2dGraphics(RepMaxCalculator repMaxCalculator, double oneRepMaxValue){
+    private void display2dGraphics(double oneRepMaxValue){
         // call the ischecked function for powerlifting or standard plates
-        //        if (standardVersusPowerliftingSwitch.isChecked()) {
+        if (standardVersusPowerliftingSwitch.isChecked()) {
         //            // user wants power lifting plates
-                    // run user input for 1 rm and plate array
-        //          // for every array element, iterate from floor middle and display to the left accordingly from the knub (use powerlifting plate images
+            double[] weight = RepMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
+            int  left = weight.length/2 - 1;
+            int right = weight.length/2;
+            for (int i = 0; i < weight.length/2; i++){
+
+                double graphic_display_left = weight[left];
+                double graphic_display_right = weight[right];
+
+                
+                right = right + 1;
+                left = left + 1;
+            }
+        //          // for every array element, iterate from floor middle and display to the left accordingly from the knub (use powerlifting plate images)
+                    // two iterative loops
         //          // repeat the same for the right. Start in and iterate outward`
-        //        } else {
+                    // repeat both loops
+
+        }
+        else {
         //            // user wants standard plates
         //            intent.putExtra(plateFormatResponseId, false);
         //            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
