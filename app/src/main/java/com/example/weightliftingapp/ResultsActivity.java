@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -142,27 +144,58 @@ public class ResultsActivity extends AppCompatActivity {
             double[] weight = RepMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
             int  left = weight.length/2 - 1;
             int right = weight.length/2;
-            for (int i = 0; i < weight.length/2; i++){
+            for (int i = 0; i < weight.length/2; i++) {
 
                 double graphic_display_left = weight[left];
                 double graphic_display_right = weight[right];
+                //after i > 1, start displaying images relative to each plate.
 
-                
+                // display android images through here
+                // a bunch
+                LinearLayout linearLayout;
+                ImageView image = new ImageView(this);
+                if (graphic_display_left == 25 && graphic_display_right == 25) {
+                    // render the 25 kg
+                    image.setImageResource(R.drawable.twofive_kg_plate);
+                }
+                else if (graphic_display_left == 20 && graphic_display_right == 20){
+                    image.setImageResource(R.drawable.twozero_kg_plate);
+                }
+                else if (graphic_display_left == 15 && graphic_display_right == 15){
+                    image.setImageResource(R.drawable.onefive_kg_plate);
+                }
+                else if (graphic_display_left == 10 && graphic_display_right == 10){
+                    image.setImageResource(R.drawable.onezero_kg_plate);
+                }
+                else if (graphic_display_left == 5 && graphic_display_right == 5){
+                    image.setImageResource(R.drawable.five_kg_plate);
+                }
+                else if (graphic_display_left == 2.5 && graphic_display_right == 2.5) {
+                    image.setImageResource(R.drawable.twohalf_kg_plate);
+                }
+                else if (graphic_display_left == 1.25 && graphic_display_right == 1.25){
+                    image.setImageResource(R.drawable.onequarter_kg_plate);
+                }
+
+                if (i == 1){
+                    // render the image according to the barbell
+                }
+                else {
+                    // render the image according to the adjacent plate
+                }
+
+
+
                 right = right + 1;
                 left = left + 1;
             }
-        //          // for every array element, iterate from floor middle and display to the left accordingly from the knub (use powerlifting plate images)
-                    // two iterative loops
-        //          // repeat the same for the right. Start in and iterate outward`
-                    // repeat both loops
+            // dynamically display images in java
+
 
         }
         else {
-        //            // user wants standard plates
-        //            intent.putExtra(plateFormatResponseId, false);
-        //            double[] plates = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
-        //            intent.putExtra(platesResponseId, plates);
-        //            do the same process but with the standard plates algorithm
+
+        }
         //        }
         // add once acquiring the array, display corresponding images
     }
