@@ -150,14 +150,13 @@ public class ResultsActivity extends AppCompatActivity {
             for (int i = 0; i < weight.length/2; i++) {
                 if (i == 0){
                     // set canvas and draw the barbell image on that canvas (5 rectangles, displayed adjacent to each other
-                    // create bitmap
-                    Bitmap barbell_display = new Bitmap();
-                    barbell_display.createBitmap();
+                    // create
+                    private Canvas mCanvas;
+                    private Paint mPaint = new Paint();
+                    private Bitmap mBitmap;
+                    private ImageView mImageView;
 
-                    //
-                    Canvas display = new Canvas(barbell_display);
-
-                    //display barbell graphic
+                    //display barbell graphic on canvas
 
 
                 }
