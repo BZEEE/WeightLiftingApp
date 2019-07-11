@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Handler;
@@ -145,6 +148,19 @@ public class ResultsActivity extends AppCompatActivity {
             int  left = weight.length/2 - 1;
             int right = weight.length/2;
             for (int i = 0; i < weight.length/2; i++) {
+                if (i == 0){
+                    // set canvas and draw the barbell image on that canvas (5 rectangles, displayed adjacent to each other
+                    // create bitmap
+                    Bitmap barbell_display = new Bitmap();
+                    barbell_display.createBitmap();
+
+                    //
+                    Canvas display = new Canvas(barbell_display);
+
+                    //display barbell graphic
+
+
+                }
 
                 double graphic_display_left = weight[left];
                 double graphic_display_right = weight[right];
@@ -152,38 +168,46 @@ public class ResultsActivity extends AppCompatActivity {
 
                 // display android images through here
                 // a bunch
-                LinearLayout linearLayout;
-                ImageView image = new ImageView(this);
+
+                ImageView image = findViewById(R.id.empty_barbell_graphic);
                 if (graphic_display_left == 25 && graphic_display_right == 25) {
-                    // render the 25 kg
-                    image.setImageResource(R.drawable.twofive_kg_plate);
+                    // draw the 25 kg plate with canvas
+                    Rect twentyfivekg = new Rect();
+                    twentyfivekg.set(0,0,0,0);
+                    // canvas not initiated
                 }
                 else if (graphic_display_left == 20 && graphic_display_right == 20){
-                    image.setImageResource(R.drawable.twozero_kg_plate);
+                    // draw the 20 kg plate using canvas
+                    Rect twentykg = new Rect();
+                    twentykg.set(0,0,0,0);
+
                 }
                 else if (graphic_display_left == 15 && graphic_display_right == 15){
-                    image.setImageResource(R.drawable.onefive_kg_plate);
+                    // draw the 15 kg plate using canvas
+                    Rect fifteenkg = new Rect();
+                    fifteenkg.set(0,0,0,0);
                 }
                 else if (graphic_display_left == 10 && graphic_display_right == 10){
-                    image.setImageResource(R.drawable.onezero_kg_plate);
+                    // draw the 10 kg plate using canvas
+                    Rect tenkg = new Rect();
+                    tenkg.set(0,0,0,0);
                 }
                 else if (graphic_display_left == 5 && graphic_display_right == 5){
-                    image.setImageResource(R.drawable.five_kg_plate);
+                    // draw the 5 kg plate using canvas
+                    Rect fivekg = new Rect();
+                    fivekg.set(0,0,0,0);
                 }
                 else if (graphic_display_left == 2.5 && graphic_display_right == 2.5) {
-                    image.setImageResource(R.drawable.twohalf_kg_plate);
+                    // draw the 2.5 kg plate using canvas
+                    Rect twohalfkg = new Rect();
+                    twohalfkg.set(0,0,0,0);
                 }
                 else if (graphic_display_left == 1.25 && graphic_display_right == 1.25){
-                    image.setImageResource(R.drawable.onequarter_kg_plate);
-                }
+                    // draw the 1.25 kg plate using canvas on the corresponding screen part
+                    Rect onequarterkg = new Rect();
+                    onequarterkg.set(0,0,0,0);
 
-                if (i == 1){
-                    // render the image according to the barbell
                 }
-                else {
-                    // render the image according to the adjacent plate
-                }
-
 
 
                 right = right + 1;

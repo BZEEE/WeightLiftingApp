@@ -66,12 +66,6 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/empty_barbell_graphic"
-        android:layout_width="wrap_content"
-        android:layout_height="288dp"
-        android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
-        app:srcCompat="@drawable/empty_barbell" />
 
     <Button
         android:id="@+id/goToARWeightsButton"
