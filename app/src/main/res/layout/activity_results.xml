@@ -66,12 +66,20 @@
 
     </RelativeLayout>
 
+    <Imageview
+        android:height="wrap_content"
+        android:width="match_parent"
+        android:id="@+id/render_weight"
+        android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
+        />
+
+
 
     <Button
         android:id="@+id/goToARWeightsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/empty_barbell_graphic"
+        android:layout_below="@+id/render_weight"
         android:layout_centerVertical="true"
         android:background="@drawable/rounded_corners_blue_background"
         android:text="@string/see_weights_in_AR"

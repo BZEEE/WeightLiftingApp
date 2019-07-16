@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.nfc.Tag;
 import android.os.Build;
@@ -172,6 +173,7 @@ public class ResultsActivity extends AppCompatActivity {
                 if (graphic_display_left == 25 && graphic_display_right == 25) {
                     // draw the 25 kg plate with canvas
                     Rect twentyfivekg = new Rect();
+
                     twentyfivekg.set(0,0,0,0);
                     // canvas not initiated
                 }
