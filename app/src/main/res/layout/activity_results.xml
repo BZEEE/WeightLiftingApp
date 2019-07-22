@@ -67,11 +67,12 @@
     </RelativeLayout>
 
     <Imageview
-        android:height="wrap_content"
-        android:width="match_parent"
         android:id="@+id/render_weight"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
         android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
-        />
+        android:width="match_parent"
+        android:height="wrap_content" />
 
 
 

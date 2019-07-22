@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Handler;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -157,7 +158,27 @@ public class ResultsActivity extends AppCompatActivity {
                     private Bitmap mBitmap;
                     private ImageView mImageView;
 
+                    private int barbellcolor;
+                    private int collarstopcolor;
+                    private int collarcolor;
+
                     //display barbell graphic on canvas
+                    private Rect barbell = new Rect();
+                    private Rect collarstop = new Rect();
+                    private Rect collar = new Rect();
+
+                    barbellcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
+                    collarstopcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
+                    collarcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
+
+                    mPaint.setColor(barbellcolor);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+                    //draw the barbell through java
+                    int vWidth = mImageView.getWidth();
+                    int vHeight = mImageView.getHeight();
+                    int halfWidth = vWidth / 2;
+                    int halfHeight = vHeight / 2;
 
 
                 }
@@ -165,11 +186,6 @@ public class ResultsActivity extends AppCompatActivity {
                 double graphic_display_left = weight[left];
                 double graphic_display_right = weight[right];
                 //after i > 1, start displaying images relative to each plate.
-
-                // display android images through here
-                // a bunch
-
-                ImageView image = findViewById(R.id.empty_barbell_graphic);
                 if (graphic_display_left == 25 && graphic_display_right == 25) {
                     // draw the 25 kg plate with canvas
                     Rect twentyfivekg = new Rect();

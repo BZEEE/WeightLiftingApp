@@ -11,5 +11,13 @@
     <color name="white">#fff</color>
     <color name="fadedGrey">#78766f</color>
     <color name="general_background">#1A1A1A</color>
+    <color name="powerliftingred">#fd0000</color>
+    <color name="powerliftingblue">#2e118f</color>
+    <color name="powerliftingyellow">#fffc00</color>
+    <color name="powerliftinggreen">#08ad1d</color>
+    <color name="powerliftingtengray">#a6a6a6</color>
+    <color name="powerliftingfivegray">#d9d9d9</color>
+    <color name="powerliftingtwohalfgray">#545454</color>
+    <color name="barbellgray">#5b5b5b</color>
 
 </resources>
