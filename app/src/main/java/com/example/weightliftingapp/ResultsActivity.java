@@ -149,7 +149,7 @@ public class ResultsActivity extends AppCompatActivity {
             double[] weight = RepMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
             int  left = weight.length/2 - 1;
             int right = weight.length/2;
-            // set canvas and draw the barbell image on that canvas (5 rectangles, displayed adjacent to each other
+            // barbell drawn to Ohio Powerbar Specs.
             // this entire section should be done before the loop is made.
             private Canvas mCanvas;
             private Paint mPaint = new Paint();
@@ -175,10 +175,6 @@ public class ResultsActivity extends AppCompatActivity {
 
             mImageView = (ImageView) findViewById(R.id.render_weight);
             //draw the barbell through java
-            int vWidth = mImageView.getWidth();
-            int vHeight = mImageView.getHeight();
-            int halfWidth = vWidth / 2;
-            int halfHeight = vHeight / 2;
 
             //create the bitmap to map the canvas to then draw on
             mBitmap = Bitmap.createBitmap(vWidth, vHeight, Bitmap.Config.ARGB_8888);
@@ -199,9 +195,10 @@ public class ResultsActivity extends AppCompatActivity {
             mCanvas.drawRect(10,121,81,129,mPaint);
             //draw the right sleeve
             mCanvas.drawRect(319,121,390,129,mPaint);
+            //create a loop that
 
             for (int i = 0; i < weight.length/2; i++) {
-                
+                //initiate a "left" tracker that increments by the plate width. for every increment
                 double graphic_display_left = weight[left];
                 double graphic_display_right = weight[right];
                 //after i > 1, start displaying images relative to each plate.
