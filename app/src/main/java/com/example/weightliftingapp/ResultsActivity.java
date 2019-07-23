@@ -149,40 +149,59 @@ public class ResultsActivity extends AppCompatActivity {
             double[] weight = RepMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
             int  left = weight.length/2 - 1;
             int right = weight.length/2;
+            // set canvas and draw the barbell image on that canvas (5 rectangles, displayed adjacent to each other
+            // this entire section should be done before the loop is made.
+            private Canvas mCanvas;
+            private Paint mPaint = new Paint();
+            private Bitmap mBitmap;
+            private ImageView mImageView;
+
+            private int black;
+            private int barbellcolor;
+            private int collarstopcolor;
+            private int collarcolor;
+
+            //display barbell graphic on canvas
+            private Rect barbell = new Rect();
+            private Rect collarstop = new Rect();
+            private Rect collar = new Rect();
+
+            black = ResourcesCompat.getColor(getResources(),R.color.black,null);
+            barbellcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
+            collarstopcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
+            collarcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
+
+            mPaint.setColor(barbellcolor);
+
+            mImageView = (ImageView) findViewById(R.id.render_weight);
+            //draw the barbell through java
+            int vWidth = mImageView.getWidth();
+            int vHeight = mImageView.getHeight();
+            int halfWidth = vWidth / 2;
+            int halfHeight = vHeight / 2;
+
+            //create the bitmap to map the canvas to then draw on
+            mBitmap = Bitmap.createBitmap(vWidth, vHeight, Bitmap.Config.ARGB_8888);
+            mImageView.setImageBitmap(mBitmap);
+            mCanvas = new Canvas(mBitmap);
+
+            //set the background color of the canvas to black
+            mCanvas.drawColor(black);
+            //center the midsection of the barbell in the center of the view
+            mCanvas.drawRect(88,123,312,127,mPaint);
+            //draw the collarstops
+            //draw left sleevestop
+            mCanvas.drawRect(82,116,87,134,mPaint);
+            //draw right sleevestop
+            mCanvas.drawRect(313,116,318,134,mPaint);
+            //draw the collars
+            //draw the left sleeve
+            mCanvas.drawRect(10,121,81,129,mPaint);
+            //draw the right sleeve
+            mCanvas.drawRect(319,121,390,129,mPaint);
+
             for (int i = 0; i < weight.length/2; i++) {
-                if (i == 0){
-                    // set canvas and draw the barbell image on that canvas (5 rectangles, displayed adjacent to each other
-                    // create
-                    private Canvas mCanvas;
-                    private Paint mPaint = new Paint();
-                    private Bitmap mBitmap;
-                    private ImageView mImageView;
-
-                    private int barbellcolor;
-                    private int collarstopcolor;
-                    private int collarcolor;
-
-                    //display barbell graphic on canvas
-                    private Rect barbell = new Rect();
-                    private Rect collarstop = new Rect();
-                    private Rect collar = new Rect();
-
-                    barbellcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
-                    collarstopcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
-                    collarcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
-
-                    mPaint.setColor(barbellcolor);
-
-                    mImageView = (ImageView) findViewById(R.id.render_weight);
-                    //draw the barbell through java
-                    int vWidth = mImageView.getWidth();
-                    int vHeight = mImageView.getHeight();
-                    int halfWidth = vWidth / 2;
-                    int halfHeight = vHeight / 2;
-
-
-                }
-
+                
                 double graphic_display_left = weight[left];
                 double graphic_display_right = weight[right];
                 //after i > 1, start displaying images relative to each plate.

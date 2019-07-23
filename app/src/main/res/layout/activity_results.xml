@@ -40,11 +40,13 @@
             android:id="@+id/StandardPlatesTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
             android:layout_toLeftOf="@+id/StandardVersusPowerliftingSwitch"
-            android:text="@string/action_standard_plates"
-            android:gravity="right"
 
-            android:textColor="@color/white"/>
+            android:gravity="right"
+            android:text="@string/action_standard_plates"
+            android:textColor="@color/white" />
 
         <Switch
             android:id="@+id/StandardVersusPowerliftingSwitch"
@@ -68,8 +70,8 @@
 
     <Imageview
         android:id="@+id/render_weight"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_width="400dp"
+        android:layout_height="250dp"
         android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
         android:width="match_parent"
         android:height="wrap_content" />
