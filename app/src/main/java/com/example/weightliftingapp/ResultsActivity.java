@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -186,16 +187,20 @@ public class ResultsActivity extends AppCompatActivity {
             //center the midsection of the barbell in the center of the view
             mCanvas.drawRect(88,123,312,127,mPaint);
             //draw the collarstops
+
             //draw left sleevestop
             mCanvas.drawRect(82,116,87,134,mPaint);
             //draw right sleevestop
             mCanvas.drawRect(313,116,318,134,mPaint);
+
             //draw the collars
             //draw the left sleeve
             mCanvas.drawRect(10,121,81,129,mPaint);
             //draw the right sleeve
             mCanvas.drawRect(319,121,390,129,mPaint);
-            //create a loop that
+            //create a counter that initializes at collarstop left and right, and decrements/increments at the width of each weight.
+            int counterleft = 81;
+            int counterright = 319;
 
             for (int i = 0; i < weight.length/2; i++) {
                 //initiate a "left" tracker that increments by the plate width. for every increment
@@ -204,47 +209,156 @@ public class ResultsActivity extends AppCompatActivity {
                 //after i > 1, start displaying images relative to each plate.
                 if (graphic_display_left == 25 && graphic_display_right == 25) {
                     // draw the 25 kg plate with canvas
-                    Rect twentyfivekg = new Rect();
+                    private Rect twentyfiveleft;
+                    private Rect twentyfiveright;
 
-                    twentyfivekg.set(0,0,0,0);
+                    private int red;
+                    red = ResourcesCompat.getColor(getResources(),R.color.powerliftingred,null);
+
+                    mPaint.setColor(red);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRoundRect(counterleft-4,87,counterleft,163,2,2,mPaint);
+                    counterleft = counterleft - 5;
                     // canvas not initiated
+                    mCanvas.drawRoundRect(counterright,87,counterright+4,163,2,2,mPaint);
+                    counterright = counterright+5;
                 }
                 else if (graphic_display_left == 20 && graphic_display_right == 20){
                     // draw the 20 kg plate using canvas
-                    Rect twentykg = new Rect();
-                    twentykg.set(0,0,0,0);
+                    private Rect twentyleft;
+                    private Rect twentyright;
+
+                    private int blue;
+
+                    blue = ResourcesCompat.getColor(getResources(),R.color.powerliftingblue,null);
+
+                    mPaint.setColor(blue);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRoundRect(counterleft-3,87,counterleft,163,2,2,mPaint);
+                    counterleft = counterleft-4;
+
+                    //draw the right plate
+                    mCanvas.drawRoundRect(counterright,87,counterright+3,163,2,2,mPaint);
+                    counterright = counterright + 4;
 
                 }
                 else if (graphic_display_left == 15 && graphic_display_right == 15){
                     // draw the 15 kg plate using canvas
-                    Rect fifteenkg = new Rect();
-                    fifteenkg.set(0,0,0,0);
+                    private Rect fifteenleft;
+                    private Rect fifteenright;
+
+                    private int yellow;
+
+                    yellow = ResourcesCompat.getColor(getResources(),R.color.powerliftingyellow,null);
+
+                    mPaint.setColor(yellow);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRoundRect(counterleft-3,91,counterleft,159,2,2,mPaint);
+                    counterleft = counterleft-4;
+
+                    //draw the right plate
+                    mCanvas.drawRoundRect(counterright,91,counterright+3,159,2,2,mPaint);
+                    counterright = counterright + 4;
                 }
                 else if (graphic_display_left == 10 && graphic_display_right == 10){
                     // draw the 10 kg plate using canvas
-                    Rect tenkg = new Rect();
-                    tenkg.set(0,0,0,0);
+                    private Rect tenleft;
+                    private Rect tenright;
+
+                    private int green;
+
+                    green = ResourcesCompat.getColor(getResources(),R.color.powerliftinggreen,null);
+
+                    mPaint.setColor(green);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRoundRect(counterleft-3,97,counterleft,153,2,2,mPaint);
+                    counterleft = counterleft-4;
+
+                    //draw the right plate
+                    mCanvas.drawRoundRect(counterright,97,counterright+3,153,2,2,mPaint);
+                    counterright = counterright + 4;
                 }
                 else if (graphic_display_left == 5 && graphic_display_right == 5){
                     // draw the 5 kg plate using canvas
-                    Rect fivekg = new Rect();
-                    fivekg.set(0,0,0,0);
+                    private Rect fiveleft;
+                    private Rect fiveright;
+
+                    private int white;
+
+                    white = ResourcesCompat.getColor(getResources(),R.color.powerliftingfivegray,null);
+
+                    mPaint.setColor(white);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRoundRect(counterleft-4,106,counterleft,144,2,2,mPaint);
+                    counterleft = counterleft-5;
+
+                    //draw the right plate
+                    mCanvas.drawRoundRect(counterright,106,counterright+4,144,2,2,mPaint);
+                    counterright = counterright + 5;
+
                 }
                 else if (graphic_display_left == 2.5 && graphic_display_right == 2.5) {
                     // draw the 2.5 kg plate using canvas
-                    Rect twohalfkg = new Rect();
-                    twohalfkg.set(0,0,0,0);
+                    private Rect twohalfleft;
+                    private Rect twohalfright;
+
+                    private int gray;
+
+                    gray = ResourcesCompat.getColor(getResources(),R.color.powerliftingtwohalfgray,null);
+
+                    mPaint.setColor(gray);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRoundRect(counterleft-2,109,counterleft,141,2,2,mPaint);
+                    counterleft = counterleft-3;
+
+                    //draw the right plate
+                    mCanvas.drawRoundRect(counterright,109,counterright+2,141,2,2,mPaint);
+                    counterright = counterright + 3;
                 }
                 else if (graphic_display_left == 1.25 && graphic_display_right == 1.25){
                     // draw the 1.25 kg plate using canvas on the corresponding screen part
-                    Rect onequarterkg = new Rect();
-                    onequarterkg.set(0,0,0,0);
+                    private Rect tenleft;
+                    private Rect tenright;
+
+                    private int gray;
+
+                    gray = ResourcesCompat.getColor(getResources(),R.color.powerliftingonequartergray,null);
+
+                    mPaint.setColor(gray);
+
+                    mImageView = (ImageView) findViewById(R.id.render_weight);
+
+                    //draw the left plate
+                    mCanvas.drawRect(counterleft-2,112,counterleft,138,mPaint);
+                    counterleft = counterleft-3;
+
+                    //draw the right plate
+                    mCanvas.drawRect(counterright,112,counterright+2,138,mPaint);
+                    counterright = counterright + 3;
 
                 }
 
 
                 right = right + 1;
-                left = left + 1;
+                left = left - 1;
             }
             // dynamically display images in java
 
