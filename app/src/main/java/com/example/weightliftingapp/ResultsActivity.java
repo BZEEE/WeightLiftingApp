@@ -39,6 +39,9 @@ import static com.example.weightliftingapp.Wilks.WilksCalculatorActivity.*;
 
 
 public class ResultsActivity extends AppCompatActivity {
+
+    private static String name;
+
     private String checkFlag;
     private TextView calculatorTitle;
     private TextView calculatorResponse;
@@ -47,6 +50,8 @@ public class ResultsActivity extends AppCompatActivity {
     private RelativeLayout standardVersusPowerliftingSwitchLayout;
     public static final String plateFormatResponseId = "com.example.weightliftingapp.ARPlatesFormat";
     public static final String platesResponseId = "com.example.weightliftingapp.ARPlates";
+
+    private RepMaxCalculator repMaxCalculator;
 
     private double MIN_OPENGL_VERSION = 3.0;
 
@@ -60,6 +65,8 @@ public class ResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         // this flag is referenced from RepMaxCalculatorActivity.java
         this.checkFlag = intent.getStringExtra(flag);
+
+        repMaxCalculator = new RepMaxCalculator();
 
         // get result UI so we can pass calculations to it
         this.calculatorTitle = findViewById(R.id.results_title);
@@ -136,28 +143,29 @@ public class ResultsActivity extends AppCompatActivity {
 
     //use plate functions to output correct images after using the greedy algorithm
     private void display2dGraphics(double oneRepMaxValue){
+
         // call the ischecked function for powerlifting or standard plates
         if (standardVersusPowerliftingSwitch.isChecked()) {
         //            // user wants power lifting plates
-            double[] weight = RepMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
+            double[] weight = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, true);
             int  left = weight.length/2 - 1;
             int right = weight.length/2;
             // barbell drawn to Ohio Powerbar Specs.
             // this entire section should be done before the loop is made.
-            private Canvas mCanvas;
-            private Paint mPaint = new Paint();
-            private Bitmap mBitmap;
-            private ImageView mImageView;
+            Canvas mCanvas;
+            Paint mPaint = new Paint();
+            Bitmap mBitmap;
+            ImageView mImageView;
 
-            private int black;
-            private int barbellcolor;
-            private int collarstopcolor;
-            private int collarcolor;
+            int black;
+            int barbellcolor;
+            int collarstopcolor;
+            int collarcolor;
 
             //display barbell graphic on canvas
-            private Rect barbell = new Rect();
-            private Rect collarstop = new Rect();
-            private Rect collar = new Rect();
+            Rect barbell = new Rect();
+            Rect collarstop = new Rect();
+            Rect collar = new Rect();
 
             black = ResourcesCompat.getColor(getResources(),R.color.black,null);
             barbellcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
@@ -202,10 +210,10 @@ public class ResultsActivity extends AppCompatActivity {
                 //after i > 1, start displaying images relative to each plate.
                 if (graphic_display_left == 25 && graphic_display_right == 25) {
                     // draw the 25 kg plate with canvas
-                    private Rect twentyfiveleft;
-                    private Rect twentyfiveright;
+                    Rect twentyfiveleft;
+                    Rect twentyfiveright;
 
-                    private int red;
+                    int red;
                     red = ResourcesCompat.getColor(getResources(),R.color.powerliftingred,null);
 
                     mPaint.setColor(red);
@@ -221,10 +229,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 20 && graphic_display_right == 20){
                     // draw the 20 kg plate using canvas
-                    private Rect twentyleft;
-                    private Rect twentyright;
+                    Rect twentyleft;
+                    Rect twentyright;
 
-                    private int blue;
+                    int blue;
 
                     blue = ResourcesCompat.getColor(getResources(),R.color.powerliftingblue,null);
 
@@ -243,10 +251,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 15 && graphic_display_right == 15){
                     // draw the 15 kg plate using canvas
-                    private Rect fifteenleft;
-                    private Rect fifteenright;
+                    Rect fifteenleft;
+                    Rect fifteenright;
 
-                    private int yellow;
+                    int yellow;
 
                     yellow = ResourcesCompat.getColor(getResources(),R.color.powerliftingyellow,null);
 
@@ -264,10 +272,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 10 && graphic_display_right == 10){
                     // draw the 10 kg plate using canvas
-                    private Rect tenleft;
-                    private Rect tenright;
+                    Rect tenleft;
+                    Rect tenright;
 
-                    private int green;
+                    int green;
 
                     green = ResourcesCompat.getColor(getResources(),R.color.powerliftinggreen,null);
 
@@ -285,10 +293,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 5 && graphic_display_right == 5){
                     // draw the 5 kg plate using canvas
-                    private Rect fiveleft;
-                    private Rect fiveright;
+                    Rect fiveleft;
+                    Rect fiveright;
 
-                    private int white;
+                    int white;
 
                     white = ResourcesCompat.getColor(getResources(),R.color.powerliftingfivegray,null);
 
@@ -307,10 +315,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 2.5 && graphic_display_right == 2.5) {
                     // draw the 2.5 kg plate using canvas
-                    private Rect twohalfleft;
-                    private Rect twohalfright;
+                    Rect twohalfleft;
+                    Rect twohalfright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.powerliftingtwohalfgray,null);
 
@@ -328,10 +336,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 1.25 && graphic_display_right == 1.25){
                     // draw the 1.25 kg plate using canvas on the corresponding screen part
-                    private Rect onequarterleft;
-                    private Rect onequarterright;
+                    Rect onequarterleft;
+                    Rect onequarterright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.powerliftingonequartergray,null);
 
@@ -359,25 +367,25 @@ public class ResultsActivity extends AppCompatActivity {
         }
         else {
             // the user prompts standard plates
-            double[] weight = RepMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
+            double[] weight = repMaxCalculator.GetPlatesFromOneRepMax(oneRepMaxValue, false);
             int  left = weight.length/2 - 1;
             int right = weight.length/2;
             // barbell drawn to Ohio Powerbar Specs.
             // this entire section should be done before the loop is made.
-            private Canvas mCanvas;
-            private Paint mPaint = new Paint();
-            private Bitmap mBitmap;
-            private ImageView mImageView;
+            Canvas mCanvas;
+            Paint mPaint = new Paint();
+            Bitmap mBitmap;
+            ImageView mImageView;
 
-            private int black;
-            private int barbellcolor;
-            private int collarstopcolor;
-            private int collarcolor;
+            int black;
+            int barbellcolor;
+            int collarstopcolor;
+            int collarcolor;
 
             //display barbell graphic on canvas
-            private Rect barbell = new Rect();
-            private Rect collarstop = new Rect();
-            private Rect collar = new Rect();
+            Rect barbell = new Rect();
+            Rect collarstop = new Rect();
+            Rect collar = new Rect();
 
             black = ResourcesCompat.getColor(getResources(),R.color.black,null);
             barbellcolor = ResourcesCompat.getColor(getResources(),R.color.barbellgray,null);
@@ -420,10 +428,10 @@ public class ResultsActivity extends AppCompatActivity {
                 //after i > 1, start displaying images relative to each plate.
                 if (graphic_display_left == 20 && graphic_display_right == 20) {
                     // draw the 45 lb plate with canvas
-                    private Rect fortyfiveleft;
-                    private Rect fortyfiveright;
+                    Rect fortyfiveleft;
+                    Rect fortyfiveright;
 
-                    private int gray;
+                    int gray;
                     gray = ResourcesCompat.getColor(getResources(),R.color.fadedGrey,null);
 
                     mPaint.setColor(gray);
@@ -461,10 +469,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }*/
                 else if (graphic_display_left == 15 && graphic_display_right == 15){
                     // draw the 35 lb plate using canvas
-                    private Rect fifteenleft;
-                    private Rect fifteenright;
+                    Rect fifteenleft;
+                    Rect fifteenright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.fadedGrey,null);
 
@@ -482,10 +490,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 10 && graphic_display_right == 10){
                     // draw the 25 lb plate using canvas
-                    private Rect tenleft;
-                    private Rect tenright;
+                    Rect tenleft;
+                    Rect tenright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.fadedGrey,null);
 
@@ -503,10 +511,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 5 && graphic_display_right == 5){
                     // draw the 10 lb plate using canvas
-                    private Rect fiveleft;
-                    private Rect fiveright;
+                    Rect fiveleft;
+                    Rect fiveright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.fadedGrey,null);
 
@@ -525,10 +533,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 2.5 && graphic_display_right == 2.5) {
                     // draw the 5 lb plate using canvas
-                    private Rect twohalfleft;
-                    private Rect twohalfright;
+                    Rect twohalfleft;
+                    Rect twohalfright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.fadedGrey,null);
 
@@ -546,10 +554,10 @@ public class ResultsActivity extends AppCompatActivity {
                 }
                 else if (graphic_display_left == 1.25 && graphic_display_right == 1.25){
                     // draw the 2.5 lb plate using canvas on the corresponding screen part
-                    private Rect twohalfleft;
-                    private Rect twohalfright;
+                    Rect twohalfleft;
+                    Rect twohalfright;
 
-                    private int gray;
+                    int gray;
 
                     gray = ResourcesCompat.getColor(getResources(),R.color.fadedGrey,null);
 
