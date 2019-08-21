@@ -68,13 +68,11 @@
 
     </RelativeLayout>
 
-    <Imageview
+    <ImageView
         android:id="@+id/render_weight"
         android:layout_width="400dp"
         android:layout_height="250dp"
-        android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout"
-        android:width="match_parent"
-        android:height="wrap_content" />
+        android:layout_below="@+id/StandardVersusPowerliftingSwitchLayout" />
 
 
 

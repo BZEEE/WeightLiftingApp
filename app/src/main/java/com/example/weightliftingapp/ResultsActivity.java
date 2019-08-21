@@ -96,6 +96,8 @@ public class ResultsActivity extends AppCompatActivity {
                 this.calculatorTitle.setText(oneRepMaxDisplayTitle);
                 this.calculatorResponse.setText(String.format(Locale.CANADA, "%1$.2f", oneRepMaxValue));
 
+                display2dGraphics(oneRepMaxValue);
+
                 // check if device enables ArCore
                 DeviceEnablesArCore(repMaxCalculator, oneRepMaxValue);
 
