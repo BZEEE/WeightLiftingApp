@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1069271142328-o6os187h23e359bs36pero1o7g4vebvq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.weightliftingapp",
+            "certificate_hash": "bfc633b2248e9e3b9a1092ad260e6e4652b064b6"
+          }
+        },
+        {
           "client_id": "1069271142328-eafsdludiq7gb4b00pdkbh1rg8o9jkev.apps.googleusercontent.com",
           "client_type": 3
         }
