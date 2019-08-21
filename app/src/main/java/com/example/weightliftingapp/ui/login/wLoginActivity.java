@@ -1,17 +1,16 @@
 package com.example.weightliftingapp.ui.login;
 
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
-import android.arch.lifecycle.*;
-import android.content.Context;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.*;
+
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -29,8 +28,6 @@ import com.example.weightliftingapp.Firebase.FirebaseAuthenticationManager;
 import com.example.weightliftingapp.Firebase.FirebaseDatabaseManager;
 import com.example.weightliftingapp.R;
 import com.example.weightliftingapp.UserProfileActivity;
-import com.example.weightliftingapp.ui.login.LoginViewModel;
-import com.example.weightliftingapp.ui.login.LoginViewModelFactory;
 
 public class wLoginActivity extends AppCompatActivity {
 

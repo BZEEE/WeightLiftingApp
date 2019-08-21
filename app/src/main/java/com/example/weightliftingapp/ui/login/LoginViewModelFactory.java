@@ -1,8 +1,8 @@
 package com.example.weightliftingapp.ui.login;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.annotation.NonNull;
 
 import com.example.weightliftingapp.data.LoginDataSource;
 import com.example.weightliftingapp.data.LoginRepository;
